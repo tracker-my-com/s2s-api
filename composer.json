@@ -1,0 +1,34 @@
+{
+    "name": "mytracker/s2s-api",
+    "description": "tracker.my.com s2s api",
+    "homepage": "https://tracker.my.com",
+    "type": "library",
+    "require": {
+        "php": "^7.0",
+        "guzzlehttp/guzzle": "^6.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "myTracker team",
+            "email": "support@tracker.my.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Mycom\\Tracker\\S2S\\Api\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MycomTest\\Tracker\\S2S\\Api\\": "tests"
+        }
+    }
+}
