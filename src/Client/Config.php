@@ -8,7 +8,7 @@ namespace Mycom\Tracker\S2S\Api\Client;
 final class Config implements ConfigInterface
 {
     /** @var string Default myTracker s2s api endpoint */
-    const DEFAULT_ENDPOINT = 'https://api.tracker.my.com';
+    const DEFAULT_ENDPOINT = 'https://tracker-s2s.my.com';
 
     /** @var int myTracker s2s api version */
     const DEFAULT_VERSION = 1;
