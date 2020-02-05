@@ -34,7 +34,6 @@ class VersionMethodTest extends TestCase
         $data = json_decode($response->getBody()->getContents(), true);
 
         self::assertEquals(JSON_ERROR_NONE, json_last_error());
-        self::assertIsArray($data);
         self::assertArrayHasKey(VersionMethod::VERSION_FIELD, $data);
 
         $majorVersion = explode('.', $data[VersionMethod::VERSION_FIELD])[0];
