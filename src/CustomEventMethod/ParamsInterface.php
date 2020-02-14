@@ -46,17 +46,6 @@ interface ParamsInterface
     public function addCustomEventParam(string $name, string $value): ParamsInterface;
 
     /**
-     * Set custom event count multiplier value if you want to specify what times event was occured with current
-     * parameters. We calculate event counts using this value.
-     * @see https://tracker.my.com/docs/reports/selector-set/events
-     *
-     * @param int $count Custom event count multiplier value
-     *
-     * @return ParamsInterface
-     */
-    public function setCustomEventCount(int $count = 1): ParamsInterface;
-
-    /**
      * Set event time.
      * Event handling time used by default if you not set the value.
      *
@@ -251,12 +240,6 @@ interface ParamsInterface
      * @return string[]|null
      */
     public function getCustomEventParams();
-
-    /**
-     * Get current count value
-     * @return int|null
-     */
-    public function getCustomEventCount();
 
     /**
      * Get current event timestamp value
