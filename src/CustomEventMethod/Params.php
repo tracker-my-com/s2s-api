@@ -16,9 +16,6 @@ final class Params implements ParamsInterface
     private $customEventParams;
 
     /** @var int */
-    private $customEventCount;
-
-    /** @var int */
     private $eventTimestamp;
 
     /** @var string */
@@ -96,14 +93,6 @@ final class Params implements ParamsInterface
         } else {
             $this->customEventParams = [$name => $value];
         }
-
-        return $this;
-    }
-
-    /** @inheritDoc */
-    public function setCustomEventCount(int $count = 1): ParamsInterface
-    {
-        $this->customEventCount = $count;
 
         return $this;
     }
@@ -254,12 +243,6 @@ final class Params implements ParamsInterface
     public function getCustomEventParams()
     {
         return $this->customEventParams;
-    }
-
-    /** @inheritDoc */
-    public function getCustomEventCount()
-    {
-        return $this->customEventCount;
     }
 
     /** @inheritDoc */
