@@ -12,7 +12,6 @@ interface ParamsInterface
     /**
      * Set custom event name.
      * We can split statistics by event names.
-     * @see https://tracker.my.com/docs/reports/selector-set/events
      * @see setCustomEventParams
      *
      * @param string $name Custom event name
@@ -24,7 +23,6 @@ interface ParamsInterface
     /**
      * Set additional custom event params if you want.
      * We can split statistics by that values.
-     * @see https://tracker.my.com/docs/reports/selector-set/events
      *
      * @param array $params Custom params hash in form [name => value]
      *
@@ -35,7 +33,6 @@ interface ParamsInterface
     /**
      * Set additional custom event param if you want.
      * We can split statistics by that values.
-     * @see https://tracker.my.com/docs/reports/selector-set/events
      * @see setCustomEventParams
      *
      * @param string $name  Custom event param name
@@ -68,7 +65,6 @@ interface ParamsInterface
 
     /**
      * Set ipv4 value actual when event was occurred and we try to resolve it geo.
-     * @see https://tracker.my.com/docs/reports/selector-set/geo-n-demography
      *
      * @param string $ipv4 IPv4 value as sting, e.g. 8.8.8.8
      *
@@ -78,7 +74,6 @@ interface ParamsInterface
 
     /**
      * Set ipv6 value actual when event was occurred and we try to resolve it geo.
-     * @see https://tracker.my.com/docs/reports/selector-set/geo-n-demography
      *
      * @param string $ipv6 IPv6 value
      *
@@ -90,7 +85,6 @@ interface ParamsInterface
      * Set users gender if you know it.
      * We use that value to split statistics by gender.
      * @see Gender for gender id values.
-     * @see https://tracker.my.com/docs/reports/selector-set/geo-n-demography
      *
      * @param int $idGender User gender id
      *
@@ -101,7 +95,6 @@ interface ParamsInterface
     /**
      * Set users age in years if you know it.
      * We use that value to split statistics by user ages.
-     * @see https://tracker.my.com/docs/reports/selector-set/geo-n-demography
      *
      * @param int $age User age in years, e.g. "25"
      *
@@ -113,7 +106,6 @@ interface ParamsInterface
      * Set connection type value if you know what kind of internet connection was used when event was occurred.
      * We use that value to split statistics by connection types.
      * @see ConnectionType for connection type id values.
-     * @see https://tracker.my.com/docs/reports/selectors/device/connection-type
      *
      * @param int $connectionType Connection type id
      *
@@ -125,7 +117,6 @@ interface ParamsInterface
      * Set bluetooth status if you know what it was when event was occurred.
      * We use that value to split statistics by bluetooth status.
      * @see Bluetooth for bluetooth statuses.
-     * @see https://tracker.my.com/docs/reports/selectors/device/bluetooth-enabled
      *
      * @param int $bluetoothStatus Bluetooth status id
      *
@@ -140,7 +131,6 @@ interface ParamsInterface
      * @param string $instanceId Instance id value, 36 symbols in form "00000000-0000-0000-0000-000000000000"
      *
      * @return ParamsInterface
-     * @todo add link to doc here
      */
     public function setInstanceId(string $instanceId): ParamsInterface;
 
@@ -188,7 +178,6 @@ interface ParamsInterface
      * Set AD tracking status on user device if you know what it was when event was occurred.
      * We use that value to split statistics by AD tracking status.
      * @see AdTracking for AD trcking statuses.
-     * @see https://tracker.my.com/docs/reports/selectors/device/ad-tracking-enabled
      *
      * @param int $adTrackingStatus AD tracking status id
      *
@@ -203,7 +192,6 @@ interface ParamsInterface
      * @param string $lvid Lvid value, 32 symbols in form "00000000000000000000000000000000"
      *
      * @return ParamsInterface
-     * @todo add link to doc here
      */
     public function setLvid(string $lvid): ParamsInterface;
 
@@ -221,7 +209,6 @@ interface ParamsInterface
     /**
      * Set browser user-agent value if you know what it was when event was occurred.
      * We use that value to split statistics by browser families.
-     * @see https://tracker.my.com/docs/reports/selectors/device/browser
      *
      * @param string $userAgent User-agent value
      *

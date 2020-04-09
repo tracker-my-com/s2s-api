@@ -33,7 +33,6 @@ class ParamsTest extends TestCase
         $this->params->setIdGender(Gender::FEMALE);
         self::assertEquals(Gender::FEMALE, $this->params->getIdGender());
 
-        //todo add validation and exception here
         $this->params->setIdGender(100500);
         self::assertEquals(100500, $this->params->getIdGender());
     }

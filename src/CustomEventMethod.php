@@ -50,12 +50,6 @@ final class CustomEventMethod extends Method implements MethodInterface
     }
 
     /** @inheritDoc */
-    public function validate()
-    {
-        //todo add validation
-    }
-
-    /** @inheritDoc */
     public function getRequestOptions(): array
     {
         return [

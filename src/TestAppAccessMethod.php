@@ -6,7 +6,9 @@ use GuzzleHttp\RequestOptions;
 use Mycom\Tracker\S2S\Api\Client\{Method, MethodInterface};
 use Mycom\Tracker\S2S\Api\Common\Credentials;
 
-/**  */
+/**
+ * Method for test your credentials
+ */
 final class TestAppAccessMethod extends Method implements MethodInterface
 {
     /** @var string Custom event command name */

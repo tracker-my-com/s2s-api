@@ -48,7 +48,6 @@ class Example
      * @param int    $trackerAppId          Your application id in tracker
      * @param string $mytrackerAccountToken Your tracker account token
      *
-     * @todo add link to doc about events here, how to generate token
      * @return void
      */
     public static function sendCustomEvent(int $trackerAppId, string $mytrackerAccountToken)
