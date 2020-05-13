@@ -2,48 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Mycom\Tracker\S2S\Api\CustomEventMethod;
+namespace Mycom\Tracker\S2S\Api\UserEventMethod;
 
 use Mycom\Tracker\S2S\Api\Common\{AdBlocker, AdTracking, Bluetooth, ConnectionType, Gender};
 
 /**
- * Represents custom event params
+ * Represents common event params
  */
 interface ParamsInterface
 {
-    /**
-     * Set custom event name.
-     * We can split statistics by event names.
-     * @param string $name Custom event name
-     *
-     * @return ParamsInterface
-     * @see setCustomEventParams
-     *
-     */
-    public function setCustomEventName(string $name): ParamsInterface;
-
-    /**
-     * Set additional custom event params if you want.
-     * We can split statistics by that values.
-     *
-     * @param array $params Custom params hash in form [name => value]
-     *
-     * @return ParamsInterface
-     */
-    public function setCustomEventParams(array $params): ParamsInterface;
-
-    /**
-     * Set additional custom event param if you want.
-     * We can split statistics by that values.
-     * @param string $name Custom event param name
-     * @param string $value Custom event param value
-     *
-     * @return ParamsInterface
-     * @see setCustomEventParams
-     *
-     */
-    public function addCustomEventParam(string $name, string $value): ParamsInterface;
-
     /**
      * Set event time.
      * Event handling time used by default if you not set the value.
@@ -217,18 +184,6 @@ interface ParamsInterface
      * @return ParamsInterface
      */
     public function setUserAgent(string $userAgent): ParamsInterface;
-
-    /**
-     * Get current custom event name value
-     * @return string|null
-     */
-    public function getCustomEventName();
-
-    /**
-     * Get current custom event params value
-     * @return string[]|null
-     */
-    public function getCustomEventParams();
 
     /**
      * Get current event timestamp value

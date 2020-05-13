@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Mycom\Tracker\S2S\Api\Client;
 
@@ -33,7 +35,7 @@ final class Config implements ConfigInterface
      * Config constructor.
      *
      * @param string $endpoint myTracker s2s api endpoint
-     * @param int    $version  myTracker s2s api version
+     * @param int $version myTracker s2s api version
      */
     public function __construct(string $endpoint, int $version)
     {

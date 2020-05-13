@@ -25,6 +25,8 @@ $yourAccountToken = '';
 $responseCode = Mycom\Tracker\S2S\Api\Example::testAppAccess($yourAppId, $yourAccountToken);
 echo $responseCode, PHP_EOL;
 
-// See how you can send events inside this method:
+// See how you can send events inside this methods:
+Mycom\Tracker\S2S\Api\Example::sendRegistrationEvent($yourAppId, $yourAccountToken);
+Mycom\Tracker\S2S\Api\Example::sendLoginEvent($yourAppId, $yourAccountToken);
 Mycom\Tracker\S2S\Api\Example::sendCustomEvent($yourAppId, $yourAccountToken);
 ```
