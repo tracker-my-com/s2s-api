@@ -14,17 +14,19 @@ interface ParamsInterface
     /**
      * Set custom event name.
      * We can split statistics by event names.
+     * @see https://tracker.my.com/docs/reports/selector-set/events
+     * @see setCustomEventParams
+     *
      * @param string $name Custom event name
      *
      * @return ParamsInterface
-     * @see setCustomEventParams
-     *
      */
     public function setCustomEventName(string $name): ParamsInterface;
 
     /**
      * Set additional custom event params if you want.
      * We can split statistics by that values.
+     * @see https://tracker.my.com/docs/reports/selector-set/events
      *
      * @param array $params Custom params hash in form [name => value]
      *
@@ -35,47 +37,50 @@ interface ParamsInterface
     /**
      * Set additional custom event param if you want.
      * We can split statistics by that values.
+     * @see https://tracker.my.com/docs/reports/selector-set/events
+     * @see setCustomEventParams
+     *
      * @param string $name Custom event param name
      * @param string $value Custom event param value
      *
      * @return ParamsInterface
-     * @see setCustomEventParams
-     *
      */
     public function addCustomEventParam(string $name, string $value): ParamsInterface;
 
     /**
      * Set event time.
-     * Event handling time used by default if you not set the value.
+     * If you don’t, time of the event handling is used by default.
      *
-     * @param int $ts Unix timestamp of moment when this event was occurred.
+     * @param int $ts Unix timestamp of moment when this event occurred.
      *
      * @return ParamsInterface
      */
     public function setEventTimestamp(int $ts): ParamsInterface;
 
     /**
-     * Set user id value for user tracking ability.
-     * We use that value to keep events separately for each user.
+     * Set user ID to track users.
+     * We use this value to keep events separately for each user.
      * @see https://tracker.my.com/docs/tracking/user_tracking User tracking
      *
-     * @param string $userId User id in your project or application
+     * @param string $userId User ID in your project or application
      *
      * @return ParamsInterface
      */
     public function setCustomUserId(string $userId): ParamsInterface;
 
     /**
-     * Set ipv4 value actual when event was occurred and we try to resolve it geo.
+     * Set ipv4 actual when the event occurred, and we try to resolve it geo.
+     * @see https://tracker.my.com/docs/reports/selector-set/geo-n-demography
      *
-     * @param string $ipv4 IPv4 value as sting, e.g. 8.8.8.8
+     * @param string $ipv4 IPv4 value as string, e.g. 8.8.8.8
      *
      * @return ParamsInterface
      */
     public function setIpv4(string $ipv4): ParamsInterface;
 
     /**
-     * Set ipv6 value actual when event was occurred and we try to resolve it geo.
+     * Set ipv6 actual when the event occurred and we try to resolve it geo.
+     * @see https://tracker.my.com/docs/reports/selector-set/geo-n-demography
      *
      * @param string $ipv6 IPv6 value
      *
@@ -84,19 +89,21 @@ interface ParamsInterface
     public function setIpv6(string $ipv6): ParamsInterface;
 
     /**
-     * Set users gender if you know it.
-     * We use that value to split statistics by gender.
-     * @param int $idGender User gender id
+     * Set user's gender if you know it.
+     * We use this value to split statistics by gender.
+     * @param int $idGender User gender ID
      *
      * @return ParamsInterface
-     * @see Gender for gender id values.
+     * @see Gender for gender ID values.
+     * @see https://tracker.my.com/docs/reports/selector-set/geo-n-demography
      *
      */
     public function setIdGender(int $idGender = Gender::UNKNOWN): ParamsInterface;
 
     /**
-     * Set users age in years if you know it.
-     * We use that value to split statistics by user ages.
+     * Set user's age in years if you know it.
+     * We use this value to split statistics by user ages.
+     * @see https://tracker.my.com/docs/reports/selector-set/geo-n-demography
      *
      * @param int $age User age in years, e.g. "25"
      *
@@ -105,40 +112,44 @@ interface ParamsInterface
     public function setAge(int $age): ParamsInterface;
 
     /**
-     * Set connection type value if you know what kind of internet connection was used when event was occurred.
-     * We use that value to split statistics by connection types.
-     * @param int $connectionType Connection type id
+     * Set connection type if you know what kind of internet connection was used when event occurred.
+     * We use this value to split statistics by connection types.
+     * @param int $connectionType Connection type ID
      *
      * @return ParamsInterface
-     * @see ConnectionType for connection type id values.
+     * @see ConnectionType for connection type ID values.
+     * @see https://tracker.my.com/docs/reports/selectors/device/connection-type
      *
      */
     public function setConnectionType(int $connectionType = ConnectionType::DEFAULT): ParamsInterface;
 
     /**
-     * Set bluetooth status if you know what it was when event was occurred.
-     * We use that value to split statistics by bluetooth status.
-     * @param int $bluetoothStatus Bluetooth status id
+     * Set Bluetooth state if you know what it was when the event occurred.
+     * We use this value to split statistics by Bluetooth state.
+     * @param int $bluetoothStatus Bluetooth state ID
      *
      * @return ParamsInterface
-     * @see Bluetooth for bluetooth statuses.
+     * @see Bluetooth for Bluetooth states.
+     * @see https://tracker.my.com/docs/reports/selectors/device/bluetooth-enabled
      *
      */
     public function setBluetoothEnabled(int $bluetoothStatus = Bluetooth::DEFAULT): ParamsInterface;
 
     /**
-     * Set instance id value if event was occurred on cellphone.
-     * We use this value for keep device statistics separately and for advertising attribution.
+     * Set instanceId if the event occurred on cellphone.
+     * We use this value to keep device statistics separately and for advertising attribution.
      *
-     * @param string $instanceId Instance id value, 36 symbols in form "00000000-0000-0000-0000-000000000000"
+     * @param string $instanceId InstanceId value, 36 symbols in form "00000000-0000-0000-0000-000000000000"
      *
      * @return ParamsInterface
+     * @see https://tracker.my.com/docs/sdk/ios/api/#get_instanceId How to get instanceId for iOS
+     * @see https://tracker.my.com/docs/sdk/android/api/#get_instanceId How to get instanceId for Android
      */
     public function setInstanceId(string $instanceId): ParamsInterface;
 
     /**
-     * Set IDFA value if event was occurred on cellphone.
-     * We use this value for keep device statistics separately and for advertising attribution.
+     * Set IDFA if event was occurred on cellphone.
+     * We use this value to keep device statistics separately and for advertising attribution.
      *
      * @param string $idfa IDFA value, 36 symbols in form "00000000-0000-0000-0000-000000000000"
      *
@@ -147,18 +158,18 @@ interface ParamsInterface
     public function setIdfa(string $idfa): ParamsInterface;
 
     /**
-     * Set iOS vendor id value if event was occurred on iPhone.
-     * We use this value for keep device statistics separately and for advertising attribution.
+     * Set iOS vendor ID if the event occurred on iPhone.
+     * We use this value to keep device statistics separately and for advertising attribution.
      *
-     * @param string $iosVendorId iOS vendor id value, 36 symbols in form "00000000-0000-0000-0000-000000000000"
+     * @param string $iosVendorId iOS vendor ID value, 36 symbols in form "00000000-0000-0000-0000-000000000000"
      *
      * @return ParamsInterface
      */
     public function setIosVendorId(string $iosVendorId): ParamsInterface;
 
     /**
-     * Set GAID value if event was occurred on cellphone.
-     * We use this value for keep device statistics separately and for advertising attribution.
+     * Set GAID if the event occurred on cellphone.
+     * We use this value to keep device statistics separately and for advertising attribution.
      *
      * @param string $gaid GAID value, 36 symbols in form "00000000-0000-0000-0000-000000000000"
      *
@@ -167,29 +178,30 @@ interface ParamsInterface
     public function setGaid(string $gaid): ParamsInterface;
 
     /**
-     * Set android id value if event was occurred on android cellphone.
-     * We use this value for keep device statistics separately and for advertising attribution.
+     * Set android ID if the event occurred on Android cellphone.
+     * We use this value to keep device statistics separately and for advertising attribution.
      *
-     * @param string $androidId Android id value, 16 symbols in form "000000000000000"
+     * @param string $androidId Android ID value, 16 symbols in form "000000000000000"
      *
      * @return ParamsInterface
      */
     public function setAndroidId(string $androidId): ParamsInterface;
 
     /**
-     * Set AD tracking status on user device if you know what it was when event was occurred.
-     * We use that value to split statistics by AD tracking status.
-     * @param int $adTrackingStatus AD tracking status id
+     * Set AD tracking status on user device if you know what it was when the event occurred.
+     * We use this value to split statistics by AD tracking status.
+     * @param int $adTrackingStatus AD tracking status ID
      *
      * @return ParamsInterface
-     * @see AdTracking for AD trcking statuses.
+     * @see AdTracking for AD tracking statuses.
+     * @see https://tracker.my.com/docs/reports/selectors/device/ad-tracking-enabled
      *
      */
     public function setAdTrackingEnabled(int $adTrackingStatus = AdTracking::DEFAULT): ParamsInterface;
 
     /**
-     * Set Lvid value if event was occurred on browser.
-     * We use this value for keep device statistics separately and for advertising attribution.
+     * Set lvid if the event occurred on browser.
+     * We use this value to keep device statistics separately and for advertising attribution.
      *
      * @param string $lvid Lvid value, 32 symbols in form "00000000000000000000000000000000"
      *
@@ -198,9 +210,9 @@ interface ParamsInterface
     public function setLvid(string $lvid): ParamsInterface;
 
     /**
-     * Set Ad blocker status in users browser if you know what it was when event was occurred.
-     * We use that value to split statistics by Ad blocker status.
-     * @param int $adBlockerStatus Ad blocker status id
+     * Set ad blocker status in user's browser if you know what it was when the event occurred.
+     * We use this value to split statistics by Ad blocker status.
+     * @param int $adBlockerStatus Ad blocker status ID
      *
      * @return ParamsInterface
      * @see AdBlocker for Ad blocker statuses.
@@ -209,10 +221,11 @@ interface ParamsInterface
     public function setAdBlocker(int $adBlockerStatus = AdBlocker::DEFAULT): ParamsInterface;
 
     /**
-     * Set browser user-agent value if you know what it was when event was occurred.
-     * We use that value to split statistics by browser families.
+     * Set browser's User-Agent if you know what it was when the event occurred.
+     * We use this value to split statistics by browser families.
+     * @see https://tracker.my.com/docs/reports/selectors/device/browser
      *
-     * @param string $userAgent User-agent value
+     * @param string $userAgent User-Agent value
      *
      * @return ParamsInterface
      */
@@ -237,7 +250,7 @@ interface ParamsInterface
     public function getEventTimestamp();
 
     /**
-     * Get current user id value
+     * Get current user ID value
      * @return string|null
      */
     public function getCustomUserId();
@@ -255,7 +268,7 @@ interface ParamsInterface
     public function getIpv6(): string;
 
     /**
-     * Get current gender id value
+     * Get current gender ID value
      * @return int|null
      */
     public function getIdGender();
@@ -273,37 +286,37 @@ interface ParamsInterface
     public function getConnectionType();
 
     /**
-     * Get current bluetooth status value
+     * Get current Bluetooth state value
      * @return int|null
      */
     public function getBluetoothEnabled();
 
     /**
-     * Get current instance id value
+     * Get current instanceId value
      * @return string|null
      */
     public function getInstanceId();
 
     /**
-     * Get current idfa value
+     * Get current IDFA value
      * @return string|null
      */
     public function getIdfa();
 
     /**
-     * Get current vendor id value
+     * Get current vendor ID value
      * @return string|null
      */
     public function getIosVendorId();
 
     /**
-     * Get current gaid value
+     * Get current GAID value
      * @return string|null
      */
     public function getGaid();
 
     /**
-     * Get current android id value
+     * Get current Android ID value
      * @return string|null
      */
     public function getAndroidId();
@@ -327,7 +340,7 @@ interface ParamsInterface
     public function getAdBlocker();
 
     /**
-     * Get current user agent value
+     * Get current User Agent value
      * @return string|null
      */
     public function getUserAgent();
