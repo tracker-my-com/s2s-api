@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Mycom\Tracker\S2S\Api;
 
@@ -24,7 +26,7 @@ class Example
     /**
      * Check s2s app access and return response status code.
      *
-     * @param int    $trackerAppId          Your application id in tracker
+     * @param int $trackerAppId Your application id in tracker
      * @param string $mytrackerAccountToken Your tracker account token
      *
      * @return int
@@ -42,10 +44,73 @@ class Example
     }
 
     /**
-     * Custom events example
-     * @see  doc
+     * Registration events example
      *
-     * @param int    $trackerAppId          Your application id in tracker
+     * @param int $trackerAppId Your application id in tracker
+     * @param string $mytrackerAccountToken Your tracker account token
+     *
+     * @return void
+     */
+    public static function sendRegistrationEvent(int $trackerAppId, string $mytrackerAccountToken)
+    {
+        $client = Client::getDefault();
+
+        // prepare registration event method instance for specified application
+        $accountCredentials = new Credentials($mytrackerAccountToken);
+        $registrationMethod = new RegistrationMethod($accountCredentials, $trackerAppId);
+
+        $registrationMethod->params()
+            ->setCustomUserId('100500')
+            ->setIdGender(Gender::FEMALE)
+            ->setAge(25)
+            ->setLvid('00000000000000000000000000000001');
+        $client->request($registrationMethod);
+
+        // cleanup method params before next call
+        $registrationMethod->params()->reset();
+
+        // send our next event
+        $registrationMethod->params()
+            ->setCustomUserId('42');
+        $client->request($registrationMethod);
+    }
+
+    /**
+     * Login events example
+     *
+     * @param int $trackerAppId Your application id in tracker
+     * @param string $mytrackerAccountToken Your tracker account token
+     *
+     * @return void
+     */
+    public static function sendLoginEvent(int $trackerAppId, string $mytrackerAccountToken)
+    {
+        $client = Client::getDefault();
+
+        // prepare login event method instance for specified application
+        $accountCredentials = new Credentials($mytrackerAccountToken);
+        $loginMethod = new LoginMethod($accountCredentials, $trackerAppId);
+
+        $loginMethod->params()
+            ->setCustomUserId('100500')
+            ->setEventTimestamp(strtotime('2020-04-22 14:00'));
+        $client->request($loginMethod);
+
+        // cleanup method params before next call
+        $loginMethod->params()->reset();
+
+        // send our next event
+        $loginMethod->params()
+            ->setCustomUserId('42')
+            ->setIpv4('8.8.8.8')
+            ->setEventTimestamp(strtotime('2020-04-22 14:02'));
+        $client->request($loginMethod);
+    }
+
+    /**
+     * Custom events example
+     *
+     * @param int $trackerAppId Your application id in tracker
      * @param string $mytrackerAccountToken Your tracker account token
      *
      * @return void
@@ -60,11 +125,9 @@ class Example
 
         // send our first event
         $customEventMethod->params()
-            ->setCustomUserId('1')
+            ->setCustomUserId('100500')
             ->setCustomEventName('levelUp')
             ->addCustomEventParam('level', '2')
-            ->setIdGender(Gender::FEMALE)
-            ->setAge(25)
             ->setLvid('00000000000000000000000000000001');
         $client->request($customEventMethod);
 
@@ -73,7 +136,7 @@ class Example
 
         // send our next event
         $customEventMethod->params()
-            ->setCustomUserId('2')
+            ->setCustomUserId('42')
             ->setCustomEventName('levelUp')
             ->addCustomEventParam('level', '5')
             ->addCustomEventParam('coins', '10');

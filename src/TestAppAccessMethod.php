@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Mycom\Tracker\S2S\Api;
 
@@ -24,7 +26,7 @@ final class TestAppAccessMethod extends Method implements MethodInterface
      * CheckAppAccessMethod constructor.
      *
      * @param Credentials $credentials
-     * @param int         $idApp
+     * @param int $idApp
      */
     public function __construct(Credentials $credentials, int $idApp)
     {

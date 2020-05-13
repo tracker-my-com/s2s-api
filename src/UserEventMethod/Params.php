@@ -2,21 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Mycom\Tracker\S2S\Api\CustomEventMethod;
+namespace Mycom\Tracker\S2S\Api\UserEventMethod;
 
 use Mycom\Tracker\S2S\Api\Common\{AdBlocker, AdTracking, Bluetooth, ConnectionType, Gender};
 
 /**
- * Represents custom event params
+ * Represents common event params
  */
 final class Params implements ParamsInterface
 {
-    /** @var string */
-    protected $customEventName;
-
-    /** @var string[] */
-    private $customEventParams;
-
     /** @var int */
     private $eventTimestamp;
 
@@ -67,37 +61,6 @@ final class Params implements ParamsInterface
 
     /** @var string */
     private $userAgent;
-
-    /** @inheritDoc */
-    public function setCustomEventName(string $name): ParamsInterface
-    {
-        $this->customEventName = $name;
-
-        return $this;
-    }
-
-    /** @inheritDoc */
-    public function setCustomEventParams(array $params): ParamsInterface
-    {
-        $this->customEventParams = null;
-        foreach ($params as $name => $value) {
-            $this->addCustomEventParam((string)$name, (string)$value);
-        }
-
-        return $this;
-    }
-
-    /** @inheritDoc */
-    public function addCustomEventParam(string $name, string $value): ParamsInterface
-    {
-        if (isset($this->customEventParams)) {
-            $this->customEventParams[$name] = $value;
-        } else {
-            $this->customEventParams = [$name => $value];
-        }
-
-        return $this;
-    }
 
     /**  @inheritDoc */
     public function setEventTimestamp(int $ts): ParamsInterface
@@ -233,18 +196,6 @@ final class Params implements ParamsInterface
         $this->userAgent = $userAgent;
 
         return $this;
-    }
-
-    /** @inheritDoc */
-    public function getCustomEventName()
-    {
-        return $this->customEventName;
-    }
-
-    /** @inheritDoc */
-    public function getCustomEventParams()
-    {
-        return $this->customEventParams;
     }
 
     /** @inheritDoc */

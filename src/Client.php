@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Mycom\Tracker\S2S\Api;
 
@@ -37,7 +39,7 @@ final class Client implements ClientInterface
      * Client constructor.
      *
      * @param HttpClientInterface $httpClient
-     * @param ConfigInterface     $config
+     * @param ConfigInterface $config
      */
     public function __construct(HttpClientInterface $httpClient, ConfigInterface $config)
     {
@@ -51,11 +53,14 @@ final class Client implements ClientInterface
     {
         $method->validate();
 
-        $uri = implode('/', [
-            $this->endpoint,
-            'v' . $this->version,
-            $method->getUri(),
-        ]);
+        $uri = implode(
+            '/',
+            [
+                $this->endpoint,
+                'v' . $this->version,
+                $method->getUri(),
+            ]
+        );
 
         $options = $method->getRequestOptions();
 

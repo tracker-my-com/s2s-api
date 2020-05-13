@@ -6,18 +6,18 @@ namespace Mycom\Tracker\S2S\Api;
 
 use GuzzleHttp\RequestOptions;
 use Mycom\Tracker\S2S\Api\Client\{ClientInterface, Method, MethodInterface};
-use Mycom\Tracker\S2S\Api\Common\Credentials;
-use Mycom\Tracker\S2S\Api\CustomEventMethod\{Params, ParamsInterface, ParamsValidator};
+use Mycom\Tracker\S2S\Api\Common\CredentialsInterface;
+use Mycom\Tracker\S2S\Api\UserEventMethod\{Params, ParamsInterface, ParamsValidator};
 
 /**
- * Custom event command implementation
+ * Login command implementation
  */
-final class CustomEventMethod extends Method implements MethodInterface
+final class LoginMethod extends Method implements MethodInterface
 {
-    /** @var string Custom event command name */
-    private static $URI = 'customEvent';
+    /** @var string Login command name */
+    private static $URI = 'login';
 
-    /** @var Credentials */
+    /** @var CredentialsInterface */
     private $credentials;
 
     /** @var int */
@@ -30,12 +30,12 @@ final class CustomEventMethod extends Method implements MethodInterface
     private $validator;
 
     /**
-     * CustomEvent constructor.
+     * LoginMethod constructor.
      *
-     * @param Credentials $credentials
+     * @param CredentialsInterface $credentials
      * @param int $idApp
      */
-    public function __construct(Credentials $credentials, int $idApp)
+    public function __construct(CredentialsInterface $credentials, int $idApp)
     {
         parent::__construct(self::$URI);
 
@@ -48,7 +48,7 @@ final class CustomEventMethod extends Method implements MethodInterface
     /** @inheritDoc */
     public function validate()
     {
-        $this->validator->validateCustomEventNameRequired();
+        $this->validator->validateCustomUserIdRequired();
     }
 
     /**

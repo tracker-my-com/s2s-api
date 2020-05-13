@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MycomTest\Tracker\S2S\Api\CustomEventMethod;
+namespace MycomTest\Tracker\S2S\Api\Common;
 
 use Mycom\Tracker\S2S\Api\Common\Gender;
-use Mycom\Tracker\S2S\Api\CustomEventMethod\Params;
+use Mycom\Tracker\S2S\Api\UserEventMethod\Params;
 use PHPUnit\Framework\TestCase;
 
 /**
