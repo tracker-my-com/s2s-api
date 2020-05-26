@@ -217,7 +217,7 @@ final class Params implements ParamsInterface
     }
 
     /** @inheritDoc */
-    public function getIpv6(): string
+    public function getIpv6()
     {
         return $this->ipv6;
     }

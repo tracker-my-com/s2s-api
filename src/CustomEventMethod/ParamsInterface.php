@@ -265,7 +265,7 @@ interface ParamsInterface
      * Get current IPv6 value
      * @return string|null
      */
-    public function getIpv6(): string;
+    public function getIpv6();
 
     /**
      * Get current gender ID value
