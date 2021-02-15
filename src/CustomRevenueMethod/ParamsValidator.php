@@ -54,10 +54,6 @@ final class ParamsValidator
             throw new InvalidArgumentException('total param is required');
         }
 
-        if (!\is_numeric($total)) {
-            throw new InvalidArgumentException('total must be number');
-        }
-
         if ($total < 0.0) {
             throw new InvalidArgumentException('total must be positive number');
         }

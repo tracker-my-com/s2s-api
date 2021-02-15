@@ -36,7 +36,7 @@ interface ParamsInterface
      *
      * @return ParamsInterface
      */
-    public function setTotal($total): ParamsInterface;
+    public function setTotal(float $total): ParamsInterface;
 
     /**
      * Set event time.

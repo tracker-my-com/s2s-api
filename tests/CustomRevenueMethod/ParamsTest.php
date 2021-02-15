@@ -34,6 +34,19 @@ class ParamsTest extends TestCase
         $this->params->setIdTransaction('testTransactionNext');
         self::assertEquals('testTransactionNext', $this->params->getIdTransaction());
     }
+    /**
+     * @covers Params::setTotal
+     */
+    public function testSetTotal()
+    {
+        self::assertNull($this->params->getTotal());
+
+        $this->params->setTotal(10);
+        self::assertSame(10.0, $this->params->getTotal());
+
+        $this->params->setTotal(100.4);
+        self::assertEquals(100.4, $this->params->getTotal());
+    }
 
     /**
      * @covers Params::toArray

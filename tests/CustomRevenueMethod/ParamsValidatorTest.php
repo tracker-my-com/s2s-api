@@ -72,34 +72,6 @@ class ParamsValidatorTest extends TestCase
                     ->setCurrency('RUB'),
                 'error' =>'total param is required',
             ],
-            'total empty string' => [
-                'params' => (new Params())
-                    ->setIdTransaction('idTransaction')
-                    ->setCurrency('RUB')
-                    ->setTotal(''),
-                'error' =>'total must be number',
-            ],
-            'total not float' => [
-                'params' => (new Params())
-                    ->setIdTransaction('idTransaction')
-                    ->setCurrency('RUB')
-                    ->setTotal('some'),
-                'error' =>'total must be number',
-            ],
-            'total is negative' => [
-                'params' => (new Params())
-                    ->setIdTransaction('idTransaction')
-                    ->setCurrency('RUB')
-                    ->setTotal(-1),
-                'error' =>'total must be positive number',
-            ],
-            'total is string float' => [
-                'params' => (new Params())
-                    ->setIdTransaction('idTransaction')
-                    ->setCurrency('RUB')
-                    ->setTotal('100.2'),
-                'error' => null,
-            ],
             'total is zero' => [
                 'params' => (new Params())
                     ->setIdTransaction('idTransaction')

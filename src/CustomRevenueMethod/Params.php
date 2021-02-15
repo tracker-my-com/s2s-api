@@ -88,7 +88,7 @@ final class Params implements ParamsInterface
     }
 
     /**  @inheritDoc */
-    public function setTotal($total): ParamsInterface
+    public function setTotal(float $total): ParamsInterface
     {
         $this->total = $total;
 
