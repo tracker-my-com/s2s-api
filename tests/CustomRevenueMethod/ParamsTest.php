@@ -22,9 +22,9 @@ class ParamsTest extends TestCase
     }
 
     /**
-     * @covers Params::setIdGender
+     * @covers Params::setIdTransaction
      */
-    public function testSetIdGender()
+    public function testSetIdTransaction()
     {
         self::assertNull($this->params->getIdTransaction());
 
