@@ -25,7 +25,7 @@ final class ParamsValidator
     }
 
     /**
-     * Validate is customEventName was set and not empty.
+     * Validate what all customRevenueParam required params was set and it was correctly
      *
      * @throws InvalidArgumentException
      */
