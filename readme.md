@@ -29,4 +29,5 @@ echo $responseCode, PHP_EOL;
 Mycom\Tracker\S2S\Api\Example::sendRegistrationEvent($yourAppId, $yourAccountToken);
 Mycom\Tracker\S2S\Api\Example::sendLoginEvent($yourAppId, $yourAccountToken);
 Mycom\Tracker\S2S\Api\Example::sendCustomEvent($yourAppId, $yourAccountToken);
+Mycom\Tracker\S2S\Api\Example::sendCustomRevenue($yourAppId, $yourAccountToken);
 ```

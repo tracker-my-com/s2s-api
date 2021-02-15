@@ -142,4 +142,42 @@ class Example
             ->addCustomEventParam('coins', '10');
         $client->request($customEventMethod);
     }
+
+    /**
+     * Custom revenue example
+     *
+     * @param int $trackerAppId Your application id in tracker
+     * @param string $mytrackerAccountToken Your tracker account token
+     *
+     * @return void
+     */
+    public static function sendCustomRevenue(int $trackerAppId, string $mytrackerAccountToken)
+    {
+        $client = Client::getDefault();
+
+        // prepare custom event method instance for specified application
+        $accountCredentials = new Credentials($mytrackerAccountToken);
+        $customRevenueMethod = new CustomRevenueMethod($accountCredentials, $trackerAppId);
+
+        // send our first payment
+        $customRevenueMethod->params()
+            ->setCustomUserId('100500')
+            ->setIdTransaction('order1')
+            ->setCurrency('USD')
+            ->setTotal(4.5)
+            ->setLvid('00000000000000000000000000000001');
+        $client->request($customRevenueMethod);
+
+        // cleanup method params before next call
+        $customRevenueMethod->params()->reset();
+
+        // send our next transaction
+        $customRevenueMethod->params()
+            ->setCustomUserId('42')
+            ->setIdTransaction('order2')
+            ->setCurrency('RUB')
+            ->setTotal(3000);
+
+        $client->request($customRevenueMethod);
+    }
 }
