@@ -8,23 +8,23 @@ use Mycom\Tracker\S2S\Api\CustomRevenueMethod\Params;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Params
+ * @coversDefaultClass \Mycom\Tracker\S2S\Api\CustomRevenueMethod\Params
  */
 class ParamsTest extends TestCase
 {
     /** @var Params */
-    protected $params;
+    protected Params $params;
 
     /** @inheritDoc */
-    public function setUp()
+    public function setUp(): void
     {
         $this->params = new Params();
     }
 
     /**
-     * @covers Params::setIdTransaction
+     * @covers ::setIdTransaction
      */
-    public function testSetIdTransaction()
+    public function testSetIdTransaction(): void
     {
         self::assertNull($this->params->getIdTransaction());
 
@@ -35,9 +35,9 @@ class ParamsTest extends TestCase
         self::assertEquals('testTransactionNext', $this->params->getIdTransaction());
     }
     /**
-     * @covers Params::setTotal
+     * @covers ::setTotal
      */
-    public function testSetTotal()
+    public function testSetTotal(): void
     {
         self::assertNull($this->params->getTotal());
 
@@ -49,9 +49,9 @@ class ParamsTest extends TestCase
     }
 
     /**
-     * @covers Params::toArray
+     * @covers ::toArray
      */
-    public function testToArray()
+    public function testToArray(): void
     {
         self::assertEmpty($this->params->toArray());
 
@@ -63,9 +63,10 @@ class ParamsTest extends TestCase
     }
 
     /**
-     * @covers Params::reset
+     * @covers ::reset
+     * @depends testSetIdTransaction
      */
-    public function testReset()
+    public function testReset(): void
     {
         $this->params->setIdTransaction('testTransaction');
 

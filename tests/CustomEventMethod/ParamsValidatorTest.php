@@ -10,30 +10,31 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers ParamsValidator
+ * @coversDefaultClass \Mycom\Tracker\S2S\Api\CustomEventMethod\ParamsValidator
  */
 class ParamsValidatorTest extends TestCase
 {
     /** @var ParamsValidator */
-    protected $validator;
+    protected ParamsValidator $validator;
 
     /** @var ParamsInterface|MockObject */
-    protected $params;
+    protected ParamsInterface $params;
 
     /** @inheritDoc */
-    public function setUp()
+    public function setUp(): void
     {
         $this->params = $this->createMock(ParamsInterface::class);
         $this->validator = new ParamsValidator($this->params);
     }
 
     /**
+     * @covers ::validateCustomEventNameRequired
      * @dataProvider validateCustomEventNameRequiredProvider
      *
      * @param bool $okExpected
      * @param string|null $customEventName
      */
-    public function testValidateCustomEventNameRequired(bool $okExpected, $customEventName)
+    public function testValidateCustomEventNameRequired(bool $okExpected, ?string $customEventName): void
     {
         $this->params->expects(self::once())
             ->method('getCustomEventName')

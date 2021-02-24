@@ -16,27 +16,27 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Client
+ * @coversDefaultClass \Mycom\Tracker\S2S\Api\Client
  */
 class ClientTest extends TestCase
 {
     /** @var ConfigInterface|MockObject */
-    protected $config;
+    protected ConfigInterface $config;
 
     /** @var MethodInterface|MockObject */
-    protected $method;
+    protected MethodInterface $method;
 
     /** @var Client */
-    protected $client;
+    protected Client $client;
 
     /** @var MockHandler */
-    protected $mockHandler;
+    protected MockHandler $mockHandler;
 
     /** @var HttpClient */
-    protected $httpClient;
+    protected HttpClient $httpClient;
 
     /** @inheritDoc */
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockHandler = new MockHandler();
         $handler = HandlerStack::create($this->mockHandler);
@@ -58,8 +58,9 @@ class ClientTest extends TestCase
 
     /**
      * Test OK response
+     * @covers ::request
      */
-    public function testOk()
+    public function testOk(): void
     {
         $response = new Response(200, [], 'OK');
         $this->mockHandler->append($response);
@@ -72,12 +73,28 @@ class ClientTest extends TestCase
 
     /**
      * Test 403 response
+     * @covers ::request
      */
-    public function testNotFound()
+    public function testForbidden(): void
     {
-        self::expectException(ClientException::class);
+        $this->expectException(ClientException::class);
 
         $response = new Response(403);
+        $this->mockHandler->append($response);
+
+        $this->client = new Client($this->httpClient, $this->config);
+        $this->client->request($this->method);
+    }
+
+    /**
+     * Test 404 response
+     * @covers ::request
+     */
+    public function testNotFound(): void
+    {
+        $this->expectException(ClientException::class);
+
+        $response = new Response(404);
         $this->mockHandler->append($response);
 
         $this->client = new Client($this->httpClient, $this->config);

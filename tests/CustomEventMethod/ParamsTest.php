@@ -9,23 +9,23 @@ use Mycom\Tracker\S2S\Api\CustomEventMethod\Params;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Params
+ * @coversDefaultClass \Mycom\Tracker\S2S\Api\CustomEventMethod\Params
  */
 class ParamsTest extends TestCase
 {
     /** @var Params */
-    protected $params;
+    protected Params $params;
 
     /** @inheritDoc */
-    public function setUp()
+    public function setUp(): void
     {
         $this->params = new Params();
     }
 
     /**
-     * @covers Params::setIdGender
+     * @covers ::setIdGender
      */
-    public function testSetIdGender()
+    public function testSetIdGender(): void
     {
         self::assertNull($this->params->getIdGender());
 
@@ -40,9 +40,9 @@ class ParamsTest extends TestCase
     }
 
     /**
-     * @covers Params::toArray
+     * @covers ::toArray
      */
-    public function testToArray()
+    public function testToArray(): void
     {
         self::assertEmpty($this->params->toArray());
 
@@ -54,9 +54,10 @@ class ParamsTest extends TestCase
     }
 
     /**
-     * @covers Params::reset
+     * @covers ::reset
+     * @depends testSetIdGender
      */
-    public function testReset()
+    public function testReset(): void
     {
         $this->params->setIdGender(Gender::FEMALE);
 
