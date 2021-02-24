@@ -26,7 +26,7 @@ class Example
     /**
      * Check s2s app access and return response status code.
      *
-     * @param int $trackerAppId Your application id in tracker
+     * @param int    $trackerAppId          Your application id in tracker
      * @param string $mytrackerAccountToken Your tracker account token
      *
      * @return int
@@ -46,12 +46,12 @@ class Example
     /**
      * Registration events example
      *
-     * @param int $trackerAppId Your application id in tracker
+     * @param int    $trackerAppId          Your application id in tracker
      * @param string $mytrackerAccountToken Your tracker account token
      *
      * @return void
      */
-    public static function sendRegistrationEvent(int $trackerAppId, string $mytrackerAccountToken)
+    public static function sendRegistrationEvent(int $trackerAppId, string $mytrackerAccountToken): void
     {
         $client = Client::getDefault();
 
@@ -78,12 +78,12 @@ class Example
     /**
      * Login events example
      *
-     * @param int $trackerAppId Your application id in tracker
+     * @param int    $trackerAppId          Your application id in tracker
      * @param string $mytrackerAccountToken Your tracker account token
      *
      * @return void
      */
-    public static function sendLoginEvent(int $trackerAppId, string $mytrackerAccountToken)
+    public static function sendLoginEvent(int $trackerAppId, string $mytrackerAccountToken): void
     {
         $client = Client::getDefault();
 
@@ -110,12 +110,12 @@ class Example
     /**
      * Custom events example
      *
-     * @param int $trackerAppId Your application id in tracker
+     * @param int    $trackerAppId          Your application id in tracker
      * @param string $mytrackerAccountToken Your tracker account token
      *
      * @return void
      */
-    public static function sendCustomEvent(int $trackerAppId, string $mytrackerAccountToken)
+    public static function sendCustomEvent(int $trackerAppId, string $mytrackerAccountToken): void
     {
         $client = Client::getDefault();
 
@@ -146,12 +146,12 @@ class Example
     /**
      * Custom revenue example
      *
-     * @param int $trackerAppId Your application id in tracker
+     * @param int    $trackerAppId          Your application id in tracker
      * @param string $mytrackerAccountToken Your tracker account token
      *
      * @return void
      */
-    public static function sendCustomRevenue(int $trackerAppId, string $mytrackerAccountToken)
+    public static function sendCustomRevenue(int $trackerAppId, string $mytrackerAccountToken): void
     {
         $client = Client::getDefault();
 

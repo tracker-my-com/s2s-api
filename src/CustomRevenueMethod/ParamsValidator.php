@@ -12,7 +12,7 @@ use Mycom\Tracker\S2S\Api\Exception\InvalidArgumentException;
 final class ParamsValidator
 {
     /** @var ParamsInterface */
-    private $params;
+    private ParamsInterface $params;
 
     /**
      * ParamsValidator constructor.
@@ -29,10 +29,10 @@ final class ParamsValidator
      *
      * @throws InvalidArgumentException
      */
-    public function validate()
+    public function validate(): void
     {
         $idTransaction = $this->params->getIdTransaction();
-        if (is_null($idTransaction) || 0 === strlen($idTransaction)) {
+        if ($idTransaction === null || $idTransaction === '') {
             throw new InvalidArgumentException('idTransaction param is required');
         }
 
@@ -41,7 +41,7 @@ final class ParamsValidator
         }
 
         $currency = $this->params->getCurrency();
-        if (is_null($currency) || 0 === strlen($currency)) {
+        if ($currency === null || $currency === '') {
             throw new InvalidArgumentException('currency param is required');
         }
 

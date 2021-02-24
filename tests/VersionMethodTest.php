@@ -34,7 +34,7 @@ class VersionMethodTest extends TestCase
     public function testRequest(): void
     {
         $response = $this->client->request($this->method);
-        $data = json_decode($response->getBody()->getContents(), true);
+        $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
 
         self::assertEquals(JSON_ERROR_NONE, json_last_error());
         self::assertArrayHasKey(VersionMethod::VERSION_FIELD, $data);

@@ -28,7 +28,7 @@ class ParamsValidatorTest extends TestCase
     }
 
     /**
-     * @covers ::validateCustomEventNameRequired
+     * @covers ::validate
      * @dataProvider validateCustomEventNameRequiredProvider
      *
      * @param bool $okExpected
@@ -44,7 +44,7 @@ class ParamsValidatorTest extends TestCase
             $this->expectException(InvalidArgumentException::class);
         }
 
-        $this->validator->validateCustomEventNameRequired();
+        $this->validator->validate();
 
         if ($okExpected) {
             self::assertTrue(true);

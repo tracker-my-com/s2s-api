@@ -17,7 +17,7 @@ interface MethodInterface
      * @return void
      * @throws InvalidArgumentException
      */
-    public function validate();
+    public function validate(): void;
 
     /**
      * Get method uri

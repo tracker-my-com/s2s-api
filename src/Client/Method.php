@@ -10,7 +10,7 @@ namespace Mycom\Tracker\S2S\Api\Client;
 abstract class Method implements MethodInterface
 {
     /** @var string Command name */
-    private $uri;
+    private string $uri;
 
     /**
      * Command constructor.
@@ -23,7 +23,7 @@ abstract class Method implements MethodInterface
     }
 
     /** @inheritDoc */
-    public function validate()
+    public function validate(): void
     {
         // do nothing by default
     }

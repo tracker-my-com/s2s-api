@@ -14,13 +14,13 @@ use Psr\Http\Message\ResponseInterface;
 final class Client implements ClientInterface
 {
     /** @var HttpClientInterface */
-    private $httpClient;
+    private HttpClientInterface $httpClient;
 
     /** @var string Endpoint address */
-    private $endpoint;
+    private string $endpoint;
 
     /** @var int Api version */
-    private $version;
+    private int $version;
 
     /**
      * Return default tracker s2s api client
@@ -39,7 +39,7 @@ final class Client implements ClientInterface
      * Client constructor.
      *
      * @param HttpClientInterface $httpClient
-     * @param ConfigInterface $config
+     * @param ConfigInterface     $config
      */
     public function __construct(HttpClientInterface $httpClient, ConfigInterface $config)
     {

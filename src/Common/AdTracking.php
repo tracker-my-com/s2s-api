@@ -10,11 +10,11 @@ namespace Mycom\Tracker\S2S\Api\Common;
 final class AdTracking
 {
     /** @var int AD tracking is enabled */
-    const ENABLED = 1;
+    public const ENABLED = 1;
 
     /** @var int AD tracking is disabled */
-    const DISABLED = 0;
+    public const DISABLED = 0;
 
     /** @var int Default AD tracking status */
-    const DEFAULT = self::ENABLED;
+    public const DEFAULT = self::ENABLED;
 }

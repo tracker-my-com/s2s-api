@@ -13,7 +13,7 @@ use Psr\Http\Message\ResponseInterface;
 interface ClientInterface
 {
     /** @var string Auth header name */
-    const AUTH_HEADER_NAME = 'Authorization';
+    public const AUTH_HEADER_NAME = 'Authorization';
 
     /**
      * @param MethodInterface $method

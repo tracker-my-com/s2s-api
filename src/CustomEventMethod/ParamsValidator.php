@@ -12,7 +12,7 @@ use Mycom\Tracker\S2S\Api\Exception\InvalidArgumentException;
 final class ParamsValidator
 {
     /** @var ParamsInterface */
-    private $params;
+    private ParamsInterface $params;
 
     /**
      * ParamsValidator constructor.
@@ -29,10 +29,10 @@ final class ParamsValidator
      *
      * @throws InvalidArgumentException
      */
-    public function validateCustomEventNameRequired()
+    public function validate(): void
     {
         $customEventName = $this->params->getCustomEventName();
-        if (is_null($customEventName) || 0 == strlen($customEventName)) {
+        if ($customEventName === null || $customEventName === '') {
             throw new InvalidArgumentException('customEventName param is required');
         }
     }

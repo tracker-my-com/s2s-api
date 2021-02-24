@@ -28,7 +28,7 @@ class ParamsValidatorTest extends TestCase
     }
 
     /**
-     * @covers ::validateCustomUserIdRequired
+     * @covers ::validate
      * @dataProvider validateCustomUserIdRequiredProvider
      *
      * @param bool        $okExpected
@@ -44,7 +44,7 @@ class ParamsValidatorTest extends TestCase
             $this->expectException(InvalidArgumentException::class);
         }
 
-        $this->validator->validateCustomUserIdRequired();
+        $this->validator->validate();
 
         if ($okExpected) {
             self::assertTrue(true);

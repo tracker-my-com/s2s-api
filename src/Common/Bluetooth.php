@@ -10,14 +10,14 @@ namespace Mycom\Tracker\S2S\Api\Common;
 final class Bluetooth
 {
     /** @var int Bluetooth status is unknown */
-    const UNKNOWN = 0;
+    public const UNKNOWN = 0;
 
     /** @var int Bluetooth is enabled */
-    const ENABLED = 1;
+    public const ENABLED = 1;
 
     /** @var int Bluetooth is disabled */
-    const DISABLED = 2;
+    public const DISABLED = 2;
 
     /** @var int Default bluetooth status */
-    const DEFAULT = self::UNKNOWN;
+    public const DEFAULT = self::UNKNOWN;
 }

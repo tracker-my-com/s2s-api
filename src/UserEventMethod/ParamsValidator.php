@@ -12,7 +12,7 @@ use Mycom\Tracker\S2S\Api\Exception\InvalidArgumentException;
 final class ParamsValidator
 {
     /** @var ParamsInterface */
-    private $params;
+    private ParamsInterface $params;
 
     /**
      * ParamsValidator constructor.
@@ -26,14 +26,14 @@ final class ParamsValidator
 
     /**
      * Validate is customUserId was set and not empty.
-     * Use this validtion for methods that requires customUserId.
+     * Use this validation for methods that requires customUserId.
      *
      * @throws InvalidArgumentException
      */
-    public function validateCustomUserIdRequired()
+    public function validate(): void
     {
         $customUserId = $this->params->getCustomUserId();
-        if (is_null($customUserId) || 0 == strlen($customUserId)) {
+        if ($customUserId === null || $customUserId === '') {
             throw new InvalidArgumentException('customUserId param is required');
         }
     }

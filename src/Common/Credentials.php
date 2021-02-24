@@ -10,7 +10,7 @@ namespace Mycom\Tracker\S2S\Api\Common;
 final class Credentials implements CredentialsInterface
 {
     /** @var string myTracker app token */
-    private $token;
+    private string $token;
 
     /**
      * Credentials constructor.
