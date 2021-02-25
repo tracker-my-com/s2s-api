@@ -22,7 +22,7 @@ class Example
      */
     public static function getActualVersion(ClientInterface $client = null): int
     {
-        $client = $client ?? Client::getDefault();
+        $client ??= Client::getDefault();
         $method = new VersionMethod();
         $response = $client->request($method);
 
@@ -41,7 +41,7 @@ class Example
      */
     public static function testAppAccess(int $appId, string $accountToken, ClientInterface $client = null): int
     {
-        $client = $client ?? Client::getDefault();
+        $client ??= Client::getDefault();
 
         $accountCredentials = new Credentials($accountToken);
         $method = new TestAppAccessMethod($accountCredentials, $appId);
@@ -63,7 +63,7 @@ class Example
      */
     public static function sendRegistrationEvent(int $appId, string $accountToken, ClientInterface $client = null): void
     {
-        $client = $client ?? Client::getDefault();
+        $client ??= Client::getDefault();
 
         // prepare registration event method instance for specified application
         $accountCredentials = new Credentials($accountToken);
@@ -96,7 +96,7 @@ class Example
      */
     public static function sendLoginEvent(int $appId, string $accountToken, ClientInterface $client = null): void
     {
-        $client = $client ?? Client::getDefault();
+        $client ??= Client::getDefault();
 
         // prepare login event method instance for specified application
         $accountCredentials = new Credentials($accountToken);
@@ -129,7 +129,7 @@ class Example
      */
     public static function sendCustomEvent(int $appId, string $accountToken, ClientInterface $client = null): void
     {
-        $client = $client ?? Client::getDefault();
+        $client ??= Client::getDefault();
 
         // prepare custom event method instance for specified application
         $accountCredentials = new Credentials($accountToken);
@@ -168,7 +168,7 @@ class Example
      */
     public static function sendCustomRevenue(int $appId, string $accountToken, ClientInterface $client = null): void
     {
-        $client = $client ?? Client::getDefault();
+        $client ??= Client::getDefault();
 
         // prepare custom event method instance for specified application
         $accountCredentials = new Credentials($accountToken);
