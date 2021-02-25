@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mycom\Tracker\S2S\Api;
 
+use Mycom\Tracker\S2S\Api\Client\ClientInterface;
 use Mycom\Tracker\S2S\Api\Common\{Credentials, Gender};
 
 /**
@@ -13,10 +14,15 @@ class Example
 {
     /**
      * Simple api call without any credentials
+     *
+     * @param ClientInterface|null $client
+     *
+     * @return int
+     * @throws Exception\ExceptionInterface
      */
-    public static function getActualVersion(): int
+    public static function getActualVersion(ClientInterface $client = null): int
     {
-        $client = Client::getDefault();
+        $client = $client ?? Client::getDefault();
         $method = new VersionMethod();
         $response = $client->request($method);
 
@@ -26,17 +32,19 @@ class Example
     /**
      * Check s2s app access and return response status code.
      *
-     * @param int    $trackerAppId          Your application id in tracker
-     * @param string $mytrackerAccountToken Your tracker account token
+     * @param int                  $appId        Your application id in tracker
+     * @param string               $accountToken Your account token in tracker
+     * @param ClientInterface|null $client
      *
      * @return int
+     * @throws Exception\ExceptionInterface
      */
-    public static function testAppAccess(int $trackerAppId, string $mytrackerAccountToken): int
+    public static function testAppAccess(int $appId, string $accountToken, ClientInterface $client = null): int
     {
-        $client = Client::getDefault();
+        $client = $client ?? Client::getDefault();
 
-        $accountCredentials = new Credentials($mytrackerAccountToken);
-        $method = new TestAppAccessMethod($accountCredentials, $trackerAppId);
+        $accountCredentials = new Credentials($accountToken);
+        $method = new TestAppAccessMethod($accountCredentials, $appId);
 
         $response = $client->request($method);
 
@@ -46,18 +54,20 @@ class Example
     /**
      * Registration events example
      *
-     * @param int    $trackerAppId          Your application id in tracker
-     * @param string $mytrackerAccountToken Your tracker account token
+     * @param int                  $appId        Your application id in tracker
+     * @param string               $accountToken Your account token in tracker
+     * @param ClientInterface|null $client
      *
      * @return void
+     * @throws Exception\ExceptionInterface
      */
-    public static function sendRegistrationEvent(int $trackerAppId, string $mytrackerAccountToken): void
+    public static function sendRegistrationEvent(int $appId, string $accountToken, ClientInterface $client = null): void
     {
-        $client = Client::getDefault();
+        $client = $client ?? Client::getDefault();
 
         // prepare registration event method instance for specified application
-        $accountCredentials = new Credentials($mytrackerAccountToken);
-        $registrationMethod = new RegistrationMethod($accountCredentials, $trackerAppId);
+        $accountCredentials = new Credentials($accountToken);
+        $registrationMethod = new RegistrationMethod($accountCredentials, $appId);
 
         $params = $registrationMethod->params();
         $params->customUserId = '100500';
@@ -77,18 +87,20 @@ class Example
     /**
      * Login events example
      *
-     * @param int    $trackerAppId          Your application id in tracker
-     * @param string $mytrackerAccountToken Your tracker account token
+     * @param int                  $appId        Your application id in tracker
+     * @param string               $accountToken Your account token in tracker
+     * @param ClientInterface|null $client
      *
      * @return void
+     * @throws Exception\ExceptionInterface
      */
-    public static function sendLoginEvent(int $trackerAppId, string $mytrackerAccountToken): void
+    public static function sendLoginEvent(int $appId, string $accountToken, ClientInterface $client = null): void
     {
-        $client = Client::getDefault();
+        $client = $client ?? Client::getDefault();
 
         // prepare login event method instance for specified application
-        $accountCredentials = new Credentials($mytrackerAccountToken);
-        $loginMethod = new LoginMethod($accountCredentials, $trackerAppId);
+        $accountCredentials = new Credentials($accountToken);
+        $loginMethod = new LoginMethod($accountCredentials, $appId);
 
         $params = $loginMethod->params();
         $params->customUserId = '100500';
@@ -108,18 +120,20 @@ class Example
     /**
      * Custom events example
      *
-     * @param int    $trackerAppId          Your application id in tracker
-     * @param string $mytrackerAccountToken Your tracker account token
+     * @param int                  $appId        Your application id in tracker
+     * @param string               $accountToken Your account token in tracker
+     * @param ClientInterface|null $client
      *
      * @return void
+     * @throws Exception\ExceptionInterface
      */
-    public static function sendCustomEvent(int $trackerAppId, string $mytrackerAccountToken): void
+    public static function sendCustomEvent(int $appId, string $accountToken, ClientInterface $client = null): void
     {
-        $client = Client::getDefault();
+        $client = $client ?? Client::getDefault();
 
         // prepare custom event method instance for specified application
-        $accountCredentials = new Credentials($mytrackerAccountToken);
-        $customEventMethod = new CustomEventMethod($accountCredentials, $trackerAppId);
+        $accountCredentials = new Credentials($accountToken);
+        $customEventMethod = new CustomEventMethod($accountCredentials, $appId);
 
         // send our first event
         $params = $customEventMethod->params();
@@ -145,18 +159,20 @@ class Example
     /**
      * Custom revenue example
      *
-     * @param int    $trackerAppId          Your application id in tracker
-     * @param string $mytrackerAccountToken Your tracker account token
+     * @param int                  $appId        Your application id in tracker
+     * @param string               $accountToken Your account token in tracker
+     * @param ClientInterface|null $client
      *
      * @return void
+     * @throws Exception\ExceptionInterface
      */
-    public static function sendCustomRevenue(int $trackerAppId, string $mytrackerAccountToken): void
+    public static function sendCustomRevenue(int $appId, string $accountToken, ClientInterface $client = null): void
     {
-        $client = Client::getDefault();
+        $client = $client ?? Client::getDefault();
 
         // prepare custom event method instance for specified application
-        $accountCredentials = new Credentials($mytrackerAccountToken);
-        $customRevenueMethod = new CustomRevenueMethod($accountCredentials, $trackerAppId);
+        $accountCredentials = new Credentials($accountToken);
+        $customRevenueMethod = new CustomRevenueMethod($accountCredentials, $appId);
 
         // send our first payment
         $params = $customRevenueMethod->params();

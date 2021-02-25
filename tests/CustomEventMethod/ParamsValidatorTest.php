@@ -115,7 +115,7 @@ class ParamsValidatorTest extends TestCase
                     'customEventName' => 'test',
                     'customEventParams' => [null => 'test'],
                 ]),
-                'error' => '', //null key cast to empty string
+                'error' => null, //null key cast to empty string
             ],
             'event params with null value' => [
                 'params' => $createParams([
