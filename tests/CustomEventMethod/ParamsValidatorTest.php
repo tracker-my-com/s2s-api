@@ -18,22 +18,18 @@ class ParamsValidatorTest extends TestCase
      * @covers ::validate
      * @dataProvider providerValidate
      *
-     * @param string|null $customEventName
-     * @param string|null $expectError
+     * @param Params      $params
+     * @param string|null $error
      *
      * @return void
      */
-    public function testValidate(?string $customEventName, ?string $expectError): void
+    public function testValidate(Params $params, ?string $error): void
     {
         try {
-            $params = new Params();
-            $params->customEventName = $customEventName;
-
-            $validator = new ParamsValidator($params);
-            $validator->validate();
-            self::assertNull($expectError);
+            (new ParamsValidator($params))->validate();
+            self::assertNull($error);
         } catch (InvalidArgumentException $exception) {
-            self::assertEquals($expectError, $exception->getMessage());
+            self::assertEquals($error, $exception->getMessage());
         }
     }
 
@@ -42,34 +38,91 @@ class ParamsValidatorTest extends TestCase
      */
     public function providerValidate(): array
     {
+        $createParams = static function (array $data): Params {
+            $params = new Params();
+            foreach ($data as $name => $value) {
+                $params->$name = $value;
+            }
+            return $params;
+        };
+
         return [
             'Empty string' => [
-                'customEventName' => '',
-                'expectError' => 'customEventName param is required',
+                'params' => $createParams([
+                    'customEventName' => '',
+                ]),
+                'error' => 'customEventName param is required',
             ],
             'Not set' => [
-                'customEventName' => null,
-                'expectError' => 'customEventName param is required',
+                'params' => $createParams([
+                    'customEventName' => null,
+                ]),
+                'error' => 'customEventName param is required',
             ],
             'String zero' => [
-                'customEventName' => '0',
-                'expectError' => null,
+                'params' => $createParams([
+                    'customEventName' => '0',
+                ]),
+                'error' => null,
             ],
             'Some non-empty' => [
-                'customEventName' => '100500',
-                'expectError' => null,
+                'params' => $createParams([
+                    'customEventName' => '100500',
+                ]),
+                'error' => null,
             ],
             'Caret' => [
-                'customEventName' => "\n",
-                'expectError' => null,
+                'params' => $createParams([
+                    'customEventName' => "\n",
+                ]),
+                'error' => null,
             ],
             'Tab' => [
-                'customEventName' => "\t",
-                'expectError' => null,
+                'params' => $createParams([
+                    'customEventName' => "\t",
+                ]),
+                'error' => null,
             ],
             'Space' => [
-                'customEventName' => ' ',
-                'expectError' => null,
+                'params' => $createParams([
+                    'customEventName' => ' ',
+                ]),
+                'error' => null,
+            ],
+            'empty event params' => [
+                'params' => $createParams([
+                    'customEventName' => 'test',
+                    'customEventParams' => [],
+                ]),
+                'error' => null,
+            ],
+            'event params with number key' => [
+                'params' => $createParams([
+                    'customEventName' => 'test',
+                    'customEventParams' => [1 => 'test'],
+                ]),
+                'error' => 'customEventParams key name must be string',
+            ],
+            'event params with number value' => [
+                'params' => $createParams([
+                    'customEventName' => 'test',
+                    'customEventParams' => ['test' => 1],
+                ]),
+                'error' => 'customEventParams key value must be string',
+            ],
+            'event params with null key' => [
+                'params' => $createParams([
+                    'customEventName' => 'test',
+                    'customEventParams' => [null => 'test'],
+                ]),
+                'error' => '', //null key cast to empty string
+            ],
+            'event params with null value' => [
+                'params' => $createParams([
+                    'customEventName' => 'test',
+                    'customEventParams' => ['test' => null],
+                ]),
+                'error' => 'customEventParams key value must be string',
             ],
         ];
     }

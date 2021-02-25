@@ -37,5 +37,16 @@ final class ParamsValidator
         ) {
             throw new InvalidArgumentException('customEventName param is required');
         }
+
+        if ($this->params->customEventParams !== null) {
+            foreach ($this->params->customEventParams as $name => $value) {
+                if (!\is_string($name)) {
+                    throw new InvalidArgumentException('customEventParams key name must be string');
+                }
+                if (!\is_string($value)) {
+                    throw new InvalidArgumentException('customEventParams key value must be string');
+                }
+            }
+        }
     }
 }
