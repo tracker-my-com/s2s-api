@@ -12,15 +12,6 @@ use PHPUnit\Framework\TestCase;
  */
 class ParamsTest extends TestCase
 {
-    /** @var Params */
-    protected Params $params;
-
-    /** @inheritDoc */
-    public function setUp(): void
-    {
-        $this->params = new Params();
-    }
-
     /**
      * @return void
      */
