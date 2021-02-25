@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MycomTest\Tracker\S2S\Api\Common;
+namespace MycomTest\Tracker\S2S\Api\UserEventMethod;
 
 use Mycom\Tracker\S2S\Api\Common\Gender;
 use Mycom\Tracker\S2S\Api\UserEventMethod\Params;

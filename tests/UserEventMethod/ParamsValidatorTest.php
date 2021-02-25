@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MycomTest\Tracker\S2S\Api\Common;
+namespace MycomTest\Tracker\S2S\Api\UserEventMethod;
 
 use Mycom\Tracker\S2S\Api\Exception\InvalidArgumentException;
 use Mycom\Tracker\S2S\Api\UserEventMethod\{Params, ParamsValidator};
@@ -13,19 +13,6 @@ use PHPUnit\Framework\TestCase;
  */
 class ParamsValidatorTest extends TestCase
 {
-    /** @var ParamsValidator */
-    protected ParamsValidator $validator;
-
-    /** @var Params */
-    protected Params $params;
-
-    /** @inheritDoc */
-    public function setUp(): void
-    {
-        $this->params = new Params();
-        $this->validator = new ParamsValidator($this->params);
-    }
-
     /**
      * @covers ::validate
      * @dataProvider providerValidate
