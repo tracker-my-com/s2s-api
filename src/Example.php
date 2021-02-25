@@ -17,16 +17,17 @@ class Example
      *
      * @param ClientInterface|null $client
      *
-     * @return int
+     * @return string
      * @throws Exception\ExceptionInterface
      */
-    public static function getActualVersion(ClientInterface $client = null): int
+    public static function getActualVersion(ClientInterface $client = null): string
     {
         $client ??= Client::getDefault();
         $method = new VersionMethod();
         $response = $client->request($method);
+        $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
 
-        return (int)$response->getBody()->getContents();
+        return $data[VersionMethod::VERSION_FIELD];
     }
 
     /**
