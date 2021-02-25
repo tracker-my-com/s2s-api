@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MycomTest\Tracker\S2S\Api;
 
 use Mycom\Tracker\S2S\Api\Client;
-use Mycom\Tracker\S2S\Api\Client\ClientInterface;
 use Mycom\Tracker\S2S\Api\VersionMethod;
 use PHPUnit\Framework\TestCase;
 
@@ -14,26 +13,15 @@ use PHPUnit\Framework\TestCase;
  */
 class VersionMethodTest extends TestCase
 {
-    /** @var ClientInterface */
-    protected ClientInterface $client;
-
-    /** @var VersionMethod */
-    protected VersionMethod $method;
-
-    /** @inheritDoc */
-    public function setUp(): void
-    {
-        $this->client = Client::getDefault();
-        $this->method = new VersionMethod();
-    }
 
     /**
      * Test method response
+     *
      * @group Integration
      */
     public function testRequest(): void
     {
-        $response = $this->client->request($this->method);
+        $response = Client::getDefault()->request(new VersionMethod());
         $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
 
         self::assertEquals(JSON_ERROR_NONE, json_last_error());

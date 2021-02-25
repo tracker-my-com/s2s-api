@@ -13,56 +13,52 @@ use PHPUnit\Framework\TestCase;
  */
 class ParamsTest extends TestCase
 {
-    /** @var Params */
-    protected Params $params;
-
-    /** @inheritDoc */
-    public function setUp(): void
-    {
-        $this->params = new Params();
-    }
-
     /**
-     * @covers ::setIdGender
+     * @return void
      */
     public function testSetIdGender(): void
     {
-        self::assertNull($this->params->getIdGender());
+        $params = new Params();
+        self::assertNull($params->idGender);
 
-        $this->params->setIdGender(Gender::MALE);
-        self::assertEquals(Gender::MALE, $this->params->getIdGender());
+        $params->idGender = Gender::MALE;
+        self::assertEquals(Gender::MALE, $params->idGender);
 
-        $this->params->setIdGender(Gender::FEMALE);
-        self::assertEquals(Gender::FEMALE, $this->params->getIdGender());
+        $params->idGender = Gender::FEMALE;
+        self::assertEquals(Gender::FEMALE, $params->idGender);
 
-        $this->params->setIdGender(100500);
-        self::assertEquals(100500, $this->params->getIdGender());
+        $this->expectException(\TypeError::class);
+        /** @noinspection PhpStrictTypeCheckingInspection */
+        $params->idGender = '100500';
     }
 
     /**
      * @covers ::toArray
+     * @return void
      */
     public function testToArray(): void
     {
-        self::assertEmpty($this->params->toArray());
+        $params = new Params();
+        self::assertEmpty($params->toArray());
 
-        $this->params->setIdGender(Gender::FEMALE);
-        self::assertArrayHasKey('idGender', $this->params->toArray());
-
-        $this->params->reset();
-        self::assertEmpty($this->params->toArray());
+        $params->idGender = Gender::FEMALE;
+        self::assertArrayHasKey('idGender', $params->toArray());
+        self::assertEquals(Gender::FEMALE, $params->toArray()['idGender']);
     }
 
     /**
      * @covers ::reset
      * @depends testSetIdGender
+     * @depends testToArray
+     * @return void
      */
     public function testReset(): void
     {
-        $this->params->setIdGender(Gender::FEMALE);
+        $params = new Params();
+        $params->idGender = Gender::FEMALE;
 
-        $this->params->reset();
-        self::assertNull($this->params->getIdGender());
-        self::assertEmpty($this->params->toArray());
+        $params->reset();
+        self::assertNull($params->idGender);
+        self::assertEmpty($params->toArray());
     }
 }

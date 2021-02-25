@@ -12,66 +12,70 @@ use PHPUnit\Framework\TestCase;
  */
 class ParamsTest extends TestCase
 {
-    /** @var Params */
-    protected Params $params;
-
-    /** @inheritDoc */
-    public function setUp(): void
-    {
-        $this->params = new Params();
-    }
-
     /**
-     * @covers ::setIdTransaction
+     * @return void
      */
     public function testSetIdTransaction(): void
     {
-        self::assertNull($this->params->getIdTransaction());
+        $params = new Params();
+        self::assertNull($params->idTransaction);
 
-        $this->params->setIdTransaction('testTransaction');
-        self::assertEquals('testTransaction', $this->params->getIdTransaction());
+        $params->idTransaction = 'test';
+        self::assertEquals('test', $params->idTransaction);
 
-        $this->params->setIdTransaction('testTransactionNext');
-        self::assertEquals('testTransactionNext', $this->params->getIdTransaction());
+        $params->idTransaction = 'test_overwrite';
+        self::assertEquals('test_overwrite', $params->idTransaction);
+
+        $this->expectException(\TypeError::class);
+        /** @noinspection PhpStrictTypeCheckingInspection */
+        $params->idTransaction = 100500;
     }
+
     /**
-     * @covers ::setTotal
+     * @return void
      */
     public function testSetTotal(): void
     {
-        self::assertNull($this->params->getTotal());
+        $params = new Params();
+        self::assertNull($params->total);
 
-        $this->params->setTotal(10);
-        self::assertSame(10.0, $this->params->getTotal());
+        $params->total = 0.23;
+        self::assertEquals(0.23, $params->total);
 
-        $this->params->setTotal(100.4);
-        self::assertEquals(100.4, $this->params->getTotal());
+        $params->total = 100;
+        self::assertEquals(100, $params->total);
+
+        $this->expectException(\TypeError::class);
+        /** @noinspection PhpStrictTypeCheckingInspection */
+        $params->total = '100500';
     }
 
     /**
      * @covers ::toArray
+     * @depends testSetIdTransaction
      */
     public function testToArray(): void
     {
-        self::assertEmpty($this->params->toArray());
+        $params = new Params();
+        self::assertEmpty($params->toArray());
 
-        $this->params->setIdTransaction('testTransaction');
-        self::assertArrayHasKey('idTransaction', $this->params->toArray());
-
-        $this->params->reset();
-        self::assertEmpty($this->params->toArray());
+        $params->idTransaction = 'testTransaction';
+        self::assertArrayHasKey('idTransaction', $params->toArray());
+        self::assertEquals('testTransaction', $params->toArray()['idTransaction']);
     }
 
     /**
      * @covers ::reset
      * @depends testSetIdTransaction
+     * @depends testToArray
      */
     public function testReset(): void
     {
-        $this->params->setIdTransaction('testTransaction');
+        $params = new Params();
+        $params->idTransaction = 'testTransaction';
 
-        $this->params->reset();
-        self::assertNull($this->params->getIdGender());
-        self::assertEmpty($this->params->toArray());
+        $params->reset();
+        self::assertNull($params->idTransaction);
+        self::assertEmpty($params->toArray());
     }
 }

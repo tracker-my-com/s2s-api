@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MycomTest\Tracker\S2S\Api\CustomEventMethod;
 
-use Mycom\Tracker\S2S\Api\Common\Gender;
 use Mycom\Tracker\S2S\Api\CustomEventMethod\Params;
 use PHPUnit\Framework\TestCase;
 
@@ -23,46 +22,50 @@ class ParamsTest extends TestCase
     }
 
     /**
-     * @covers ::setIdGender
+     * @return void
      */
-    public function testSetIdGender(): void
+    public function testSetCustomEventName(): void
     {
-        self::assertNull($this->params->getIdGender());
+        $params = new Params();
+        self::assertNull($params->customEventName);
 
-        $this->params->setIdGender(Gender::MALE);
-        self::assertEquals(Gender::MALE, $this->params->getIdGender());
+        $params->customEventName = 'test';
+        self::assertEquals('test', $params->customEventName);
 
-        $this->params->setIdGender(Gender::FEMALE);
-        self::assertEquals(Gender::FEMALE, $this->params->getIdGender());
+        $params->customEventName = 'test_overwrite';
+        self::assertEquals('test_overwrite', $params->customEventName);
 
-        $this->params->setIdGender(100500);
-        self::assertEquals(100500, $this->params->getIdGender());
+        $this->expectException(\TypeError::class);
+        /** @noinspection PhpStrictTypeCheckingInspection */
+        $params->customEventName = 100500;
     }
 
     /**
      * @covers ::toArray
+     * @return void
      */
     public function testToArray(): void
     {
-        self::assertEmpty($this->params->toArray());
+        $params = new Params();
+        self::assertEmpty($params->toArray());
 
-        $this->params->setIdGender(Gender::FEMALE);
-        self::assertArrayHasKey('idGender', $this->params->toArray());
-
-        $this->params->reset();
-        self::assertEmpty($this->params->toArray());
+        $params->customEventName = 'test';
+        self::assertArrayHasKey('customEventName', $params->toArray());
+        self::assertEquals('test', $params->toArray()['customEventName']);
     }
 
     /**
      * @covers ::reset
-     * @depends testSetIdGender
+     * @depends testToArray
+     * @return void
      */
     public function testReset(): void
     {
-        $this->params->setIdGender(Gender::FEMALE);
+        $params = new Params();
+        $params->customEventName = 'test';
 
-        $this->params->reset();
-        self::assertNull($this->params->getIdGender());
-        self::assertEmpty($this->params->toArray());
+        $params->reset();
+        self::assertNull($params->customEventName);
+        self::assertEmpty($params->toArray());
     }
 }

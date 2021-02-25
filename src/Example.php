@@ -59,19 +59,18 @@ class Example
         $accountCredentials = new Credentials($mytrackerAccountToken);
         $registrationMethod = new RegistrationMethod($accountCredentials, $trackerAppId);
 
-        $registrationMethod->params()
-            ->setCustomUserId('100500')
-            ->setIdGender(Gender::FEMALE)
-            ->setAge(25)
-            ->setLvid('00000000000000000000000000000001');
+        $params = $registrationMethod->params();
+        $params->customUserId = '100500';
+        $params->idGender = Gender::FEMALE;
+        $params->age = 25;
+        $params->lvid = '00000000000000000000000000000001';
         $client->request($registrationMethod);
 
         // cleanup method params before next call
-        $registrationMethod->params()->reset();
+        $params->reset();
 
         // send our next event
-        $registrationMethod->params()
-            ->setCustomUserId('42');
+        $params->customUserId = '42';
         $client->request($registrationMethod);
     }
 
@@ -91,19 +90,18 @@ class Example
         $accountCredentials = new Credentials($mytrackerAccountToken);
         $loginMethod = new LoginMethod($accountCredentials, $trackerAppId);
 
-        $loginMethod->params()
-            ->setCustomUserId('100500')
-            ->setEventTimestamp(strtotime('2020-04-22 14:00'));
+        $params = $loginMethod->params();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = strtotime('2020-04-22 14:00');
         $client->request($loginMethod);
 
         // cleanup method params before next call
-        $loginMethod->params()->reset();
+        $params->reset();
 
         // send our next event
-        $loginMethod->params()
-            ->setCustomUserId('42')
-            ->setIpv4('8.8.8.8')
-            ->setEventTimestamp(strtotime('2020-04-22 14:02'));
+        $params->customUserId = '42';
+        $params->ipv4 = '8.8.8.8';
+        $params->eventTimestamp = strtotime('2020-04-22 14:02');
         $client->request($loginMethod);
     }
 
@@ -124,22 +122,23 @@ class Example
         $customEventMethod = new CustomEventMethod($accountCredentials, $trackerAppId);
 
         // send our first event
-        $customEventMethod->params()
-            ->setCustomUserId('100500')
-            ->setCustomEventName('levelUp')
-            ->addCustomEventParam('level', '2')
-            ->setLvid('00000000000000000000000000000001');
+        $params = $customEventMethod->params();
+        $params->customUserId = '100500';
+        $params->customEventName = 'levelUp';
+        $params->customEventParams = ['level' => '2'];
+        $params->lvid = '00000000000000000000000000000001';
         $client->request($customEventMethod);
 
         // cleanup method params before next call
-        $customEventMethod->params()->reset();
+        $params->reset();
 
         // send our next event
-        $customEventMethod->params()
-            ->setCustomUserId('42')
-            ->setCustomEventName('levelUp')
-            ->addCustomEventParam('level', '5')
-            ->addCustomEventParam('coins', '10');
+        $params->customUserId = '42';
+        $params->customEventName = 'levelUp';
+        $params->customEventParams = [
+            'level' => '5',
+            'coins' => '10',
+        ];
         $client->request($customEventMethod);
     }
 
@@ -160,23 +159,22 @@ class Example
         $customRevenueMethod = new CustomRevenueMethod($accountCredentials, $trackerAppId);
 
         // send our first payment
-        $customRevenueMethod->params()
-            ->setCustomUserId('100500')
-            ->setIdTransaction('order1')
-            ->setCurrency('USD')
-            ->setTotal(4.5)
-            ->setLvid('00000000000000000000000000000001');
+        $params = $customRevenueMethod->params();
+        $params->customUserId = '100500';
+        $params->idTransaction = 'order1';
+        $params->currency = 'USD';
+        $params->total = 4.5;
+        $params->lvid = '00000000000000000000000000000001';
         $client->request($customRevenueMethod);
 
         // cleanup method params before next call
-        $customRevenueMethod->params()->reset();
+        $params->reset();
 
         // send our next transaction
-        $customRevenueMethod->params()
-            ->setCustomUserId('42')
-            ->setIdTransaction('order2')
-            ->setCurrency('RUB')
-            ->setTotal(3000);
+        $params->customUserId = '42';
+        $params->idTransaction = 'order2';
+        $params->currency = 'RUB';
+        $params->total = 3000;
 
         $client->request($customRevenueMethod);
     }

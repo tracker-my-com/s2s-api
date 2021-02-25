@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace MycomTest\Tracker\S2S\Api\CustomEventMethod;
 
-use Mycom\Tracker\S2S\Api\CustomEventMethod\{ParamsInterface, ParamsValidator};
+use Mycom\Tracker\S2S\Api\CustomEventMethod\{Params, ParamsValidator};
 use Mycom\Tracker\S2S\Api\Exception\InvalidArgumentException;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,57 +13,64 @@ use PHPUnit\Framework\TestCase;
  */
 class ParamsValidatorTest extends TestCase
 {
-    /** @var ParamsValidator */
-    protected ParamsValidator $validator;
-
-    /** @var ParamsInterface|MockObject */
-    protected ParamsInterface $params;
-
-    /** @inheritDoc */
-    public function setUp(): void
-    {
-        $this->params = $this->createMock(ParamsInterface::class);
-        $this->validator = new ParamsValidator($this->params);
-    }
 
     /**
      * @covers ::validate
-     * @dataProvider validateCustomEventNameRequiredProvider
+     * @dataProvider providerValidate
      *
-     * @param bool $okExpected
      * @param string|null $customEventName
+     * @param string|null $expectError
+     *
+     * @return void
      */
-    public function testValidateCustomEventNameRequired(bool $okExpected, ?string $customEventName): void
+    public function testValidate(?string $customEventName, ?string $expectError): void
     {
-        $this->params->expects(self::once())
-            ->method('getCustomEventName')
-            ->willReturn($customEventName);
+        try {
+            $params = new Params();
+            $params->customEventName = $customEventName;
 
-        if (!$okExpected) {
-            $this->expectException(InvalidArgumentException::class);
-        }
-
-        $this->validator->validate();
-
-        if ($okExpected) {
-            self::assertTrue(true);
+            $validator = new ParamsValidator($params);
+            $validator->validate();
+            self::assertNull($expectError);
+        } catch (InvalidArgumentException $exception) {
+            self::assertEquals($expectError, $exception->getMessage());
         }
     }
 
     /**
      * @return array
      */
-    public function validateCustomEventNameRequiredProvider(): array
+    public function providerValidate(): array
     {
         return [
-            'Empty string' => [false, ''],
-            'Not set' => [false, null],
-
-            'String zero' => [true, '0'],
-            'Some non-empty' => [true, 'levelUp'],
-            'Caret' => [true, "\n"],
-            'Tab' => [true, "\t"],
-            'Space' => [true, ' '],
+            'Empty string' => [
+                'customEventName' => '',
+                'expectError' => 'customEventName param is required',
+            ],
+            'Not set' => [
+                'customEventName' => null,
+                'expectError' => 'customEventName param is required',
+            ],
+            'String zero' => [
+                'customEventName' => '0',
+                'expectError' => null,
+            ],
+            'Some non-empty' => [
+                'customEventName' => '100500',
+                'expectError' => null,
+            ],
+            'Caret' => [
+                'customEventName' => "\n",
+                'expectError' => null,
+            ],
+            'Tab' => [
+                'customEventName' => "\t",
+                'expectError' => null,
+            ],
+            'Space' => [
+                'customEventName' => ' ',
+                'expectError' => null,
+            ],
         ];
     }
 }

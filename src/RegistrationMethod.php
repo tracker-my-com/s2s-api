@@ -7,7 +7,7 @@ namespace Mycom\Tracker\S2S\Api;
 use GuzzleHttp\RequestOptions;
 use Mycom\Tracker\S2S\Api\Client\{ClientInterface, Method};
 use Mycom\Tracker\S2S\Api\Common\CredentialsInterface;
-use Mycom\Tracker\S2S\Api\UserEventMethod\{Params, ParamsInterface, ParamsValidator};
+use Mycom\Tracker\S2S\Api\UserEventMethod\{Params, ParamsValidator};
 
 /**
  * Registration command implementation
@@ -54,9 +54,9 @@ final class RegistrationMethod extends Method
     /**
      * Return event params object
      *
-     * @return ParamsInterface
+     * @return Params
      */
-    public function params(): ParamsInterface
+    public function params(): Params
     {
         return $this->params;
     }

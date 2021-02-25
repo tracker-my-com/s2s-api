@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace MycomTest\Tracker\S2S\Api\Common;
 
 use Mycom\Tracker\S2S\Api\Exception\InvalidArgumentException;
-use Mycom\Tracker\S2S\Api\UserEventMethod\{ParamsInterface, ParamsValidator};
-use PHPUnit\Framework\MockObject\MockObject;
+use Mycom\Tracker\S2S\Api\UserEventMethod\{Params, ParamsValidator};
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,54 +16,73 @@ class ParamsValidatorTest extends TestCase
     /** @var ParamsValidator */
     protected ParamsValidator $validator;
 
-    /** @var ParamsInterface|MockObject */
-    protected ParamsInterface $params;
+    /** @var Params */
+    protected Params $params;
 
     /** @inheritDoc */
     public function setUp(): void
     {
-        $this->params = $this->createMock(ParamsInterface::class);
+        $this->params = new Params();
         $this->validator = new ParamsValidator($this->params);
     }
 
     /**
      * @covers ::validate
-     * @dataProvider validateCustomUserIdRequiredProvider
+     * @dataProvider providerValidate
      *
-     * @param bool        $okExpected
      * @param string|null $customUserId
+     * @param string|null $expectError
+     *
+     * @return void
      */
-    public function testValidateCustomUserIdRequired(bool $okExpected, ?string $customUserId): void
+    public function testValidate(?string $customUserId, ?string $expectError): void
     {
-        $this->params->expects(self::once())
-            ->method('getCustomUserId')
-            ->willReturn($customUserId);
+        try {
+            $params = new Params();
+            $params->customUserId = $customUserId;
 
-        if (!$okExpected) {
-            $this->expectException(InvalidArgumentException::class);
-        }
-
-        $this->validator->validate();
-
-        if ($okExpected) {
-            self::assertTrue(true);
+            $validator = new ParamsValidator($params);
+            $validator->validate();
+            self::assertNull($expectError);
+        } catch (InvalidArgumentException $exception) {
+            self::assertEquals($expectError, $exception->getMessage());
         }
     }
 
     /**
      * @return array
      */
-    public function validateCustomUserIdRequiredProvider(): array
+    public function providerValidate(): array
     {
         return [
-            'Empty string' => [false, ''],
-            'Not set' => [false, null],
-
-            'String zero' => [true, '0'],
-            'Some non-empty' => [true, '100500'],
-            'Caret' => [true, "\n"],
-            'Tab' => [true, "\t"],
-            'Space' => [true, ' '],
+            'Empty string' => [
+                'customUserId' => '',
+                'expectError' => 'customUserId param is required',
+            ],
+            'Not set' => [
+                'customUserId' => null,
+                'expectError' => 'customUserId param is required',
+            ],
+            'String zero' => [
+                'customUserId' => '0',
+                'expectError' => null,
+            ],
+            'Some non-empty' => [
+                'customUserId' => '100500',
+                'expectError' => null,
+            ],
+            'Caret' => [
+                'customUserId' => "\n",
+                'expectError' => null,
+            ],
+            'Tab' => [
+                'customUserId' => "\t",
+                'expectError' => null,
+            ],
+            'Space' => [
+                'customUserId' => ' ',
+                'expectError' => null,
+            ],
         ];
     }
 }
