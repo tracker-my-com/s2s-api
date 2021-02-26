@@ -19,6 +19,7 @@ class BaseParams
     public ?int $eventTimestamp = null;
 
     /**
+     * Set user ID to track users.
      * We use this value to keep events separately for each user.
      *
      * @see https://tracker.my.com/docs/tracking/user_tracking
