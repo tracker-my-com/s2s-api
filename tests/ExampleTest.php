@@ -38,7 +38,7 @@ class ExampleTest extends TestCase
                 self::assertInstanceOf(VersionMethod::class, $method);
                 self::assertEquals('version', $method->getUri());
                 self::assertEquals([], $method->getRequestOptions());
-                return new Response(200, [], 'OK');
+                return new Response(200, [], '{"version":"1.0.0"}');
             });
 
         Example::getActualVersion($client);
