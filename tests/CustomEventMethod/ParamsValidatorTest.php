@@ -101,14 +101,14 @@ class ParamsValidatorTest extends TestCase
                     'customEventName' => 'test',
                     'customEventParams' => [1 => 'test'],
                 ]),
-                'error' => 'customEventParams key name must be string',
+                'error' => 'customEventParams key name must be a string',
             ],
             'event params with number value' => [
                 'params' => $createParams([
                     'customEventName' => 'test',
                     'customEventParams' => ['test' => 1],
                 ]),
-                'error' => 'customEventParams key value must be string',
+                'error' => 'customEventParams key value must be a string',
             ],
             'event params with null key' => [
                 'params' => $createParams([
@@ -122,7 +122,7 @@ class ParamsValidatorTest extends TestCase
                     'customEventName' => 'test',
                     'customEventParams' => ['test' => null],
                 ]),
-                'error' => 'customEventParams key value must be string',
+                'error' => 'customEventParams key value must be a string',
             ],
         ];
     }
