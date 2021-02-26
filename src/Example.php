@@ -33,8 +33,8 @@ class Example
     /**
      * Check s2s app access and return response status code.
      *
-     * @param int                  $appId        Your application id in tracker
-     * @param string               $accountToken Your account token in tracker
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
      * @param ClientInterface|null $client
      *
      * @return int
@@ -55,8 +55,8 @@ class Example
     /**
      * Registration events example
      *
-     * @param int                  $appId        Your application id in tracker
-     * @param string               $accountToken Your account token in tracker
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
      * @param ClientInterface|null $client
      *
      * @return void
@@ -88,8 +88,8 @@ class Example
     /**
      * Login events example
      *
-     * @param int                  $appId        Your application id in tracker
-     * @param string               $accountToken Your account token in tracker
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
      * @param ClientInterface|null $client
      *
      * @return void
@@ -121,8 +121,8 @@ class Example
     /**
      * Custom events example
      *
-     * @param int                  $appId        Your application id in tracker
-     * @param string               $accountToken Your account token in tracker
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
      * @param ClientInterface|null $client
      *
      * @return void
@@ -160,8 +160,8 @@ class Example
     /**
      * Custom revenue example
      *
-     * @param int                  $appId        Your application id in tracker
-     * @param string               $accountToken Your account token in tracker
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
      * @param ClientInterface|null $client
      *
      * @return void
