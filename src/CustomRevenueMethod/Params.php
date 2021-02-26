@@ -12,7 +12,7 @@ use Mycom\Tracker\S2S\Api\Common\BaseParams;
 final class Params extends BaseParams
 {
     /**
-     * Set ID of the transaction in the client's system.
+     * Set transaction ID as in the client's system.
      *
      * @var string|null Transaction identifier, 1-255 characters, example: order1234
      */
