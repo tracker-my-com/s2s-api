@@ -22,7 +22,7 @@ final class Params extends BaseParams
     public ?string $customEventName = null;
 
     /**
-     * Set additional custom event params if you want.
+     * Set additional custom event params if needed.
      * We can split statistics by that values.
      *
      * @see https://tracker.my.com/docs/reports/selector-set/events
