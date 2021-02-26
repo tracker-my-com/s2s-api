@@ -23,7 +23,7 @@ final class Params extends BaseParams
 
     /**
      * Set additional custom event params if needed.
-     * We can split statistics by that values.
+     * We can split stats by these values.
      *
      * @see https://tracker.my.com/docs/reports/selector-set/events
      *
