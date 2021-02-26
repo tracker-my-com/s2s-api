@@ -19,7 +19,7 @@ final class Params extends BaseParams
     public ?string $idTransaction = null;
 
     /**
-     * Set transaction currency code in ISO-4217
+     * Set transaction currency coded in ISO-4217
      *
      * @var string|null Transaction currency, 3 characters, example: USD
      */
