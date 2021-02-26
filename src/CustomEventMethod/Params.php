@@ -13,7 +13,7 @@ final class Params extends BaseParams
 {
     /**
      * Set custom event name.
-     * We can split statistics by event names.
+     * We can split stats by event names.
      *
      * @see https://tracker.my.com/docs/reports/selector-set/events
      *
