@@ -26,7 +26,7 @@ final class ParamsValidator
 
     /**
      * Validate is customUserId was set and not empty.
-     * Use this validation for methods that requires customUserId.
+     * Use this validation for methods that require customUserId.
      *
      * @throws InvalidArgumentException
      */
