@@ -10,11 +10,11 @@ namespace Mycom\Tracker\S2S\Api\Common;
 final class AdBlocker
 {
     /** @var int Ad blocker is enabled */
-    const ENABLED = 1;
+    public const ENABLED = 1;
 
     /** @var int Ad blocker is disabled */
-    const DISABLED = 0;
+    public const DISABLED = 0;
 
     /** @var int Default Ad blocker status */
-    const DEFAULT = self::DISABLED;
+    public const DEFAULT = self::DISABLED;
 }

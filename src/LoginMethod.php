@@ -5,39 +5,39 @@ declare(strict_types=1);
 namespace Mycom\Tracker\S2S\Api;
 
 use GuzzleHttp\RequestOptions;
-use Mycom\Tracker\S2S\Api\Client\{ClientInterface, Method, MethodInterface};
+use Mycom\Tracker\S2S\Api\Client\{ClientInterface, Method};
 use Mycom\Tracker\S2S\Api\Common\CredentialsInterface;
-use Mycom\Tracker\S2S\Api\UserEventMethod\{Params, ParamsInterface, ParamsValidator};
+use Mycom\Tracker\S2S\Api\UserEventMethod\{Params, ParamsValidator};
 
 /**
  * Login command implementation
  */
-final class LoginMethod extends Method implements MethodInterface
+final class LoginMethod extends Method
 {
     /** @var string Login command name */
-    private static $URI = 'login';
+    private const URI = 'login';
 
     /** @var CredentialsInterface */
-    private $credentials;
+    private CredentialsInterface $credentials;
 
     /** @var int */
-    private $idApp;
+    private int $idApp;
 
-    /** @var ParamsInterface */
-    private $params;
+    /** @var Params */
+    private Params $params;
 
     /** @var ParamsValidator */
-    private $validator;
+    private ParamsValidator $validator;
 
     /**
      * LoginMethod constructor.
      *
      * @param CredentialsInterface $credentials
-     * @param int $idApp
+     * @param int                  $idApp
      */
     public function __construct(CredentialsInterface $credentials, int $idApp)
     {
-        parent::__construct(self::$URI);
+        parent::__construct(self::URI);
 
         $this->credentials = $credentials;
         $this->idApp = $idApp;
@@ -46,17 +46,17 @@ final class LoginMethod extends Method implements MethodInterface
     }
 
     /** @inheritDoc */
-    public function validate()
+    public function validate(): void
     {
-        $this->validator->validateCustomUserIdRequired();
+        $this->validator->validate();
     }
 
     /**
      * Return event params object
      *
-     * @return ParamsInterface
+     * @return Params
      */
-    public function params(): ParamsInterface
+    public function params(): Params
     {
         return $this->params;
     }

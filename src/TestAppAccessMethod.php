@@ -5,32 +5,32 @@ declare(strict_types=1);
 namespace Mycom\Tracker\S2S\Api;
 
 use GuzzleHttp\RequestOptions;
-use Mycom\Tracker\S2S\Api\Client\{Method, MethodInterface};
+use Mycom\Tracker\S2S\Api\Client\Method;
 use Mycom\Tracker\S2S\Api\Common\Credentials;
 
 /**
  * Method for test your credentials
  */
-final class TestAppAccessMethod extends Method implements MethodInterface
+final class TestAppAccessMethod extends Method
 {
-    /** @var string Custom event command name */
-    private static $URI = 'test-app-access';
+    /** @var string Test app access command name */
+    private const URI = 'test-app-access';
 
     /** @var Credentials */
-    private $credentials;
+    private Credentials $credentials;
 
     /** @var int */
-    private $idApp;
+    private int $idApp;
 
     /**
      * CheckAppAccessMethod constructor.
      *
      * @param Credentials $credentials
-     * @param int $idApp
+     * @param int         $idApp
      */
     public function __construct(Credentials $credentials, int $idApp)
     {
-        parent::__construct(self::$URI);
+        parent::__construct(self::URI);
 
         $this->credentials = $credentials;
         $this->idApp = $idApp;

@@ -11,15 +11,15 @@ use Mycom\Tracker\S2S\Api\Exception\InvalidArgumentException;
  */
 final class ParamsValidator
 {
-    /** @var ParamsInterface */
-    private $params;
+    /** @var Params */
+    private Params $params;
 
     /**
      * ParamsValidator constructor.
      *
-     * @param ParamsInterface $params
+     * @param Params $params
      */
-    public function __construct(ParamsInterface $params)
+    public function __construct(Params $params)
     {
         $this->params = $params;
     }
@@ -29,32 +29,35 @@ final class ParamsValidator
      *
      * @throws InvalidArgumentException
      */
-    public function validate()
+    public function validate(): void
     {
-        $idTransaction = $this->params->getIdTransaction();
-        if (is_null($idTransaction) || 0 === strlen($idTransaction)) {
+        if (
+            $this->params->idTransaction === null
+            || $this->params->idTransaction === ''
+        ) {
             throw new InvalidArgumentException('idTransaction param is required');
         }
 
-        if (strlen($idTransaction) > 255) {
+        if (strlen($this->params->idTransaction) > 255) {
             throw new InvalidArgumentException('idTransaction expected to be below 255');
         }
 
-        $currency = $this->params->getCurrency();
-        if (is_null($currency) || 0 === strlen($currency)) {
+        if (
+            $this->params->currency === null
+            || $this->params->currency === ''
+        ) {
             throw new InvalidArgumentException('currency param is required');
         }
 
-        if (strlen($currency) !== 3) {
+        if (strlen($this->params->currency) !== 3) {
             throw new InvalidArgumentException('currency must be 3 character code');
         }
 
-        $total = $this->params->getTotal();
-        if (is_null($total)) {
+        if ($this->params->total === null) {
             throw new InvalidArgumentException('total param is required');
         }
 
-        if ($total < 0.0) {
+        if ($this->params->total < 0.0) {
             throw new InvalidArgumentException('total must be positive number');
         }
     }

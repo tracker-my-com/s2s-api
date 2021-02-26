@@ -10,11 +10,11 @@ namespace Mycom\Tracker\S2S\Api\Common;
 final class Gender
 {
     /** @var int User's gender is unknown */
-    const UNKNOWN = 0;
+    public const UNKNOWN = 0;
 
     /** @var int User is male */
-    const MALE = 1;
+    public const MALE = 1;
 
     /** @var int User is female */
-    const FEMALE = 2;
+    public const FEMALE = 2;
 }

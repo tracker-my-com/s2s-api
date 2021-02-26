@@ -10,14 +10,14 @@ namespace Mycom\Tracker\S2S\Api\Common;
 final class ConnectionType
 {
     /** @var int Connection type is unknown */
-    const UNKNOWN = 0;
+    public const UNKNOWN = 0;
 
     /** @var int Mobile internet */
-    const MOBILE = 1;
+    public const MOBILE = 1;
 
     /** @var int Wi-fi */
-    const WIFI = 2;
+    public const WIFI = 2;
 
     /** @var int Default connection type */
-    const DEFAULT = self::UNKNOWN;
+    public const DEFAULT = self::UNKNOWN;
 }

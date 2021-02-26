@@ -9,31 +9,20 @@ use Mycom\Tracker\S2S\Api\VersionMethod;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers VersionMethod
+ * @coversDefaultClass \Mycom\Tracker\S2S\Api\VersionMethod
  */
 class VersionMethodTest extends TestCase
 {
-    /** @var Client\ClientInterface */
-    protected $client;
-
-    /** @var VersionMethod */
-    protected $method;
-
-    /** @inheritDoc */
-    public function setUp()
-    {
-        $this->client = Client::getDefault();
-        $this->method = new VersionMethod();
-    }
 
     /**
      * Test method response
+     *
      * @group Integration
      */
-    public function testRequest()
+    public function testRequest(): void
     {
-        $response = $this->client->request($this->method);
-        $data = json_decode($response->getBody()->getContents(), true);
+        $response = Client::getDefault()->request(new VersionMethod());
+        $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
 
         self::assertEquals(JSON_ERROR_NONE, json_last_error());
         self::assertArrayHasKey(VersionMethod::VERSION_FIELD, $data);

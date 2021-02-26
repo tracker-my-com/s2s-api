@@ -9,16 +9,16 @@ use Mycom\Tracker\S2S\Api\Client\Method;
 /**
  * Get current api version
  */
-final class VersionMethod extends Method implements Client\MethodInterface
+final class VersionMethod extends Method
 {
     /** @var string response field with version value */
-    const VERSION_FIELD = 'version';
+    public const VERSION_FIELD = 'version';
 
-    /** @var string Custom event command name */
-    private static $URI = 'version';
+    /** @var string Version command name */
+    private const URI = 'version';
 
     public function __construct()
     {
-        parent::__construct(self::$URI);
+        parent::__construct(self::URI);
     }
 }
