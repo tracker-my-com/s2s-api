@@ -14,7 +14,7 @@ class BaseParams
      * Set event time.
      * If you don’t, the time of the event handling is used by default.
      *
-     * @var int|null Unix timestamp of moment when this event occurred.
+     * @var int|null Unix timestamp of the moment when this event occurred.
      */
     public ?int $eventTimestamp = null;
 
