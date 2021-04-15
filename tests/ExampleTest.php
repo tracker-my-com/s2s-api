@@ -8,10 +8,14 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\RequestOptions;
 use Mycom\Tracker\S2S\Api\Client\ClientInterface;
 use Mycom\Tracker\S2S\Api\Client\MethodInterface;
+use Mycom\Tracker\S2S\Api\CustomEventBatchMethod;
 use Mycom\Tracker\S2S\Api\CustomEventMethod;
+use Mycom\Tracker\S2S\Api\CustomRevenueBatchMethod;
 use Mycom\Tracker\S2S\Api\CustomRevenueMethod;
 use Mycom\Tracker\S2S\Api\Example;
+use Mycom\Tracker\S2S\Api\LoginBatchMethod;
 use Mycom\Tracker\S2S\Api\LoginMethod;
+use Mycom\Tracker\S2S\Api\RegistrationBatchMethod;
 use Mycom\Tracker\S2S\Api\RegistrationMethod;
 use Mycom\Tracker\S2S\Api\TestAppAccessMethod;
 use Mycom\Tracker\S2S\Api\VersionMethod;
@@ -113,6 +117,40 @@ class ExampleTest extends TestCase
     }
 
     /**
+     * @covers ::sendRegistrationEventBatch
+     * @return void
+     */
+    public function testSendRegistrationEventBatch(): void
+    {
+        $client = $this->createMock(ClientInterface::class);
+        $client
+            ->expects(self::once())
+            ->method('request')
+            ->willReturnCallback(static function (MethodInterface $method): ResponseInterface {
+                self::assertInstanceOf(RegistrationBatchMethod::class, $method);
+                self::assertEquals('registrationBatch', $method->getUri());
+                self::assertEquals([
+                    RequestOptions::HEADERS => [ClientInterface::AUTH_HEADER_NAME => 'secret'],
+                    RequestOptions::QUERY => ['idApp' => 1],
+                    RequestOptions::JSON => [
+                        [
+                            'customUserId' => '100500',
+                            'idGender' => 2,
+                            'age' => 25,
+                            'lvid' => '00000000000000000000000000000001',
+                        ],
+                        [
+                            'customUserId' => '42',
+                        ],
+                    ],
+                ], $method->getRequestOptions());
+                return new Response(200, [], 'OK');
+            });
+
+        Example::sendRegistrationEventBatch(1, 'secret', $client);
+    }
+
+    /**
      * @covers ::sendLoginEvent
      * @return void
      */
@@ -154,6 +192,40 @@ class ExampleTest extends TestCase
             });
 
         Example::sendLoginEvent(1, 'secret', $client);
+    }
+
+    /**
+     * @covers ::sendLoginEventBatch
+     * @return void
+     */
+    public function testSendLoginEventBatch(): void
+    {
+        $client = $this->createMock(ClientInterface::class);
+        $client
+            ->expects(self::once())
+            ->method('request')
+            ->willReturnCallback(static function (MethodInterface $method): ResponseInterface {
+                self::assertInstanceOf(LoginBatchMethod::class, $method);
+                self::assertEquals('loginBatch', $method->getUri());
+                self::assertEquals([
+                    RequestOptions::HEADERS => [ClientInterface::AUTH_HEADER_NAME => 'secret'],
+                    RequestOptions::QUERY => ['idApp' => 1],
+                    RequestOptions::JSON => [
+                        [
+                            'customUserId' => '100500',
+                            'eventTimestamp' => 1587564000,
+                        ],
+                        [
+                            'customUserId' => '42',
+                            'eventTimestamp' => 1587564120,
+                            'ipv4' => '8.8.8.8',
+                        ],
+                    ],
+                ], $method->getRequestOptions());
+                return new Response(200, [], 'OK');
+            });
+
+        Example::sendLoginEventBatch(1, 'secret', $client);
     }
 
     /**
@@ -206,6 +278,45 @@ class ExampleTest extends TestCase
     }
 
     /**
+     * @covers ::sendCustomEventBatch
+     * @return void
+     */
+    public function testSendCustomEventBatch(): void
+    {
+        $client = $this->createMock(ClientInterface::class);
+        $client
+            ->expects(self::once())
+            ->method('request')
+            ->willReturnCallback(static function (MethodInterface $method): ResponseInterface {
+                self::assertInstanceOf(CustomEventBatchMethod::class, $method);
+                self::assertEquals('customEventBatch', $method->getUri());
+                self::assertEquals([
+                    RequestOptions::HEADERS => [ClientInterface::AUTH_HEADER_NAME => 'secret'],
+                    RequestOptions::QUERY => ['idApp' => 1],
+                    RequestOptions::JSON => [
+                        [
+                            'customUserId' => '100500',
+                            'customEventName' => 'levelUp',
+                            'customEventParams' => ['level' => '2'],
+                            'lvid' => '00000000000000000000000000000001',
+                        ],
+                        [
+                            'customUserId' => '42',
+                            'customEventName' => 'levelUp',
+                            'customEventParams' => [
+                                'level' => '5',
+                                'coins' => '10',
+                            ],
+                        ],
+                    ],
+                ], $method->getRequestOptions());
+                return new Response(200, [], 'OK');
+            });
+
+        Example::sendCustomEventBatch(1, 'secret', $client);
+    }
+
+    /**
      * @covers ::sendCustomRevenue
      * @return void
      */
@@ -251,5 +362,43 @@ class ExampleTest extends TestCase
             });
 
         Example::sendCustomRevenue(1, 'secret', $client);
+    }
+
+    /**
+     * @covers ::sendCustomRevenueBatch
+     * @return void
+     */
+    public function testSendCustomRevenueBatch(): void
+    {
+        $client = $this->createMock(ClientInterface::class);
+        $client
+            ->expects(self::once())
+            ->method('request')
+            ->willReturnCallback(static function (MethodInterface $method): ResponseInterface {
+                self::assertInstanceOf(CustomRevenueBatchMethod::class, $method);
+                self::assertEquals('customRevenueBatch', $method->getUri());
+                self::assertEquals([
+                    RequestOptions::HEADERS => [ClientInterface::AUTH_HEADER_NAME => 'secret'],
+                    RequestOptions::QUERY => ['idApp' => 1],
+                    RequestOptions::JSON => [
+                        [
+                            'customUserId' => '100500',
+                            'lvid' => '00000000000000000000000000000001',
+                            'idTransaction' => 'order1',
+                            'currency' => 'USD',
+                            'total' => 4.5,
+                        ],
+                        [
+                            'customUserId' => '42',
+                            'idTransaction' => 'order2',
+                            'currency' => 'RUB',
+                            'total' => 3000.0,
+                        ],
+                    ],
+                ], $method->getRequestOptions());
+                return new Response(200, [], 'OK');
+            });
+
+        Example::sendCustomRevenueBatch(1, 'secret', $client);
     }
 }

@@ -6,7 +6,7 @@ namespace Mycom\Tracker\S2S\Api;
 
 use GuzzleHttp\RequestOptions;
 use Mycom\Tracker\S2S\Api\Client\{ClientInterface, Method};
-use Mycom\Tracker\S2S\Api\Common\Credentials;
+use Mycom\Tracker\S2S\Api\Common\CredentialsInterface;
 use Mycom\Tracker\S2S\Api\CustomRevenueMethod\{Params, ParamsValidator};
 
 /**
@@ -17,8 +17,8 @@ final class CustomRevenueMethod extends Method
     /** @var string Custom revenue command name */
     private const URI = 'customRevenue';
 
-    /** @var Credentials */
-    private Credentials $credentials;
+    /** @var CredentialsInterface */
+    private CredentialsInterface $credentials;
 
     /** @var int */
     private int $idApp;
@@ -30,12 +30,12 @@ final class CustomRevenueMethod extends Method
     private ParamsValidator $validator;
 
     /**
-     * CustomEvent constructor.
+     * CustomRevenueMethod constructor.
      *
-     * @param Credentials $credentials
-     * @param int         $idApp
+     * @param CredentialsInterface $credentials
+     * @param int                  $idApp
      */
-    public function __construct(Credentials $credentials, int $idApp)
+    public function __construct(CredentialsInterface $credentials, int $idApp)
     {
         parent::__construct(self::URI);
 
