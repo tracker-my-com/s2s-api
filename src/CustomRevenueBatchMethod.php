@@ -40,8 +40,6 @@ final class CustomRevenueBatchMethod extends Method
 
         $this->credentials = $credentials;
         $this->idApp = $idApp;
-        $this->params = new Params();
-        $this->validator = new ParamsValidator($this->params);
     }
 
     /**
