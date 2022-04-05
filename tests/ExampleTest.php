@@ -625,7 +625,8 @@ class ExampleTest extends TestCase
                         'orderId' => '234-1234-1234-12345',
                         'eventTimestamp' => time(),
                         'token' => 'ofjkingojelmkmedpgfkfelj',
-                        'subscriptionId' => 'monthly001'
+                        'subscriptionId' => 'monthly001',
+                        'subscriptionPeriod' => 'P1M'
                     ],
                 ], $method->getRequestOptions());
                 return new Response(200, [], 'OK');

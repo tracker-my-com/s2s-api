@@ -83,6 +83,23 @@ class ParamsValidatorTest extends TestCase
                 ]),
                 'error' => 'token param is required',
             ],
+            'subscriptionPeriod not set' => [
+                'params' => $createParams([
+                    'orderId' => 'orderId',
+                    'subscriptionId' => 'subscriptionId',
+                    'token' => 'token',
+                ]),
+                'error' => 'subscriptionPeriod param is required',
+            ],
+            'subscriptionPeriod empty string' => [
+                'params' => $createParams([
+                    'orderId' => 'orderId',
+                    'subscriptionId' => 'subscriptionId',
+                    'token' => 'token',
+                    'subscriptionPeriod' => ''
+                ]),
+                'error' => 'subscriptionPeriod param is required',
+            ],
             'subscriptionPeriod wrong string format' => [
                 'params' => $createParams([
                     'orderId' => 'orderId',
