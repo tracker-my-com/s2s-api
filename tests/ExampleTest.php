@@ -676,7 +676,8 @@ class ExampleTest extends TestCase
                             'orderId' => '234-1234-1234-12345',
                             'eventTimestamp' => time(),
                             'subscriptionId' => 'monthly001',
-                            'token' => 'ofjkingojelmkmedpgfkfelj'
+                            'token' => 'ofjkingojelmkmedpgfkfelj',
+                            'subscriptionPeriod' => 'P1M'
                         ],
                         [
                             'customUserId' => '100500',
