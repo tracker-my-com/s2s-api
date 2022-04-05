@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Mycom\Tracker\S2S\Api\Common;
 
-
 /**
  * Base implementation for BaseParamsInterface
  */
