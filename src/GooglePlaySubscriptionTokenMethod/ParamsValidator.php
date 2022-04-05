@@ -37,7 +37,8 @@ final class ParamsValidator implements ValidatorInterface
         $params = [
             'orderId' => $this->params->orderId,
             'subscriptionId' => $this->params->subscriptionId,
-            'token' => $this->params->token
+            'token' => $this->params->token,
+            'subscriptionPeriod' => $this->params->subscriptionPeriod
         ];
 
         foreach ($params as $paramName => $paramValue) {
@@ -46,12 +47,10 @@ final class ParamsValidator implements ValidatorInterface
             }
         }
 
-        if ($this->params->subscriptionPeriod !== null) {
-            try {
-                new DateInterval($this->params->subscriptionPeriod);
-            } catch (Exception $e) {
-                throw new InvalidArgumentException("subscriptionPeriod param should be in ISO 8601 format");
-            }
+        try {
+            new DateInterval($this->params->subscriptionPeriod);
+        } catch (Exception $e) {
+            throw new InvalidArgumentException("subscriptionPeriod param should be in ISO 8601 format");
         }
     }
 }
