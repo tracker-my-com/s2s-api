@@ -572,6 +572,7 @@ class Example
         $params->orderId = '234-1234-1234-12345';
         $params->subscriptionId = 'monthly001';
         $params->token = 'ofjkingojelmkmedpgfkfelj';
+        $params->subscriptionPeriod = 'P1M';
 
         // prepare our second event
         $params = $googlePlaySubscriptionToken->addParams();
