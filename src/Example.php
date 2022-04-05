@@ -504,4 +504,84 @@ class Example
 
         $client->request($googlePlaySubscriptionTransaction);
     }
+
+    /**
+     * Google play subscription token exapmle
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendGooglePlaySubscriptionToken(int $appId, string $accountToken, ClientInterface $client = null): void
+    {
+        $client ??= Client::getDefault();
+
+        // prepare google play subscription token method instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $googlePlaySubscriptionToken = new GooglePlaySubscriptionTokenMethod($accountCredentials, $appId);
+
+        // send our data
+        $params = $googlePlaySubscriptionToken->params();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->orderId = '234-1234-1234-12345';
+        $params->subscriptionId = 'monthly001';
+        $params->token = 'ofjkingojelmkmedpgfkfelj';
+
+        $client->request($googlePlaySubscriptionToken);
+
+        // cleanup method params before next call
+        $params->reset();
+
+        // send our next transaction
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->orderId = '234-1234-1234-12345';
+        $params->subscriptionId = 'monthly001';
+        $params->token = 'jlefkfgpdemkmlejognikjfo';
+        $params->subscriptionPeriod = 'P1M';
+
+        $client->request($googlePlaySubscriptionToken);
+    }
+
+    /**
+     * Google play subscription token batch exapmle
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendGooglePlaySubscriptionTokenBatch(int $appId, string $accountToken, ClientInterface $client = null): void
+    {
+        $client ??= Client::getDefault();
+
+        // prepare google play subscription token method instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $googlePlaySubscriptionToken = new GooglePlaySubscriptionTokenBatchMethod($accountCredentials, $appId);
+
+        // prepare our first event
+        $params = $googlePlaySubscriptionToken->addParams();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->orderId = '234-1234-1234-12345';
+        $params->subscriptionId = 'monthly001';
+        $params->token = 'ofjkingojelmkmedpgfkfelj';
+
+        // prepare our second event
+        $params = $googlePlaySubscriptionToken->addParams();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->orderId = '234-1234-1234-12345';
+        $params->subscriptionId = 'monthly001';
+        $params->token = 'jlefkfgpdemkmlejognikjfo';
+        $params->subscriptionPeriod = 'P1M';
+
+        $client->request($googlePlaySubscriptionToken);
+    }
 }
