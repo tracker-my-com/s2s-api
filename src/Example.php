@@ -328,4 +328,89 @@ class Example
 
         $client->request($customRevenueBatchMethod);
     }
+    /**
+     * Google play product transaction exapmle
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendGooglePlayProductTransaction(int $appId, string $accountToken, ClientInterface $client = null): void
+    {
+        $client ??= Client::getDefault();
+
+        // prepare google play product transaction method instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $googlePlayProductTransaction = new GooglePlayProductTransactionMethod($accountCredentials, $appId);
+
+        // send our data
+        $params = $googlePlayProductTransaction->params();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->orderId = '234-1234-1234-12345';
+        $params->productId = '001';
+        $params->token = 'ofjkingojelmkmedpgfkfelj';
+        $params->currency = 'USD';
+        $params->revenue = 10.0;
+
+        $client->request($googlePlayProductTransaction);
+
+        // cleanup method params before next call
+        $params->reset();
+
+        // send our next transaction
+        $params->customUserId = '500100';
+        $params->eventTimestamp = time();
+        $params->orderId = '321-4321-4321-54321';
+        $params->productId = '002';
+        $params->token = 'jlefkfgpdemkmlejognikjfo';
+        $params->currency = 'USD';
+        $params->revenue = 20.0;
+
+        $client->request($googlePlayProductTransaction);
+    }
+
+    /**
+     * Google play product transaction batch exapmle
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendGooglePlayProductTransactionBatch(int $appId, string $accountToken, ClientInterface $client = null): void
+    {
+        $client ??= Client::getDefault();
+
+        // prepare google play product transaction method instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $googlePlayProductTransaction = new GooglePlayProductTransactionBatchMethod($accountCredentials, $appId);
+
+        // prepare our first event
+        $params = $googlePlayProductTransaction->addParams();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->orderId = '234-1234-1234-12345';
+        $params->productId = '001';
+        $params->token = 'ofjkingojelmkmedpgfkfelj';
+        $params->currency = 'USD';
+        $params->revenue = 10.0;
+
+        // prepare our second event
+        $params = $googlePlayProductTransaction->addParams();
+        $params->customUserId = '500100';
+        $params->eventTimestamp = time();
+        $params->orderId = '321-4321-4321-54321';
+        $params->productId = '002';
+        $params->token = 'jlefkfgpdemkmlejognikjfo';
+        $params->currency = 'USD';
+        $params->revenue = 20.0;
+
+        $client->request($googlePlayProductTransaction);
+    }
 }
