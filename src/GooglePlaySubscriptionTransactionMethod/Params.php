@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Mycom\Tracker\S2S\Api\GooglePlaySubscriptionTransactionMethod;
 
 use Mycom\Tracker\S2S\Api\Common\BaseParams;
+use Mycom\Tracker\S2S\Api\Common\Introductory;
+use Mycom\Tracker\S2S\Api\Common\PaymentState;
 
 /**
  * Represents GooglePlaySubscriptionTransaction method params
@@ -46,15 +48,17 @@ final class Params extends BaseParams
      * 1 — received
      * 2 — trial
      *
-     * @var string|null
+     * @see PaymentState for payment values.
+     * @var int|null
      */
-    public ?string $paymentState = null;
+    public ?int $paymentState = null;
 
     /**
      * Introductory price information of the subscription:
      * 0 — regular price
      * 1 — introductory price
-
+     *
+     * @see Introductory for introductory values.
      * @var int|null
      */
     public ?int $isIntroductory = null;

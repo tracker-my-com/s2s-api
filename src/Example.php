@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Mycom\Tracker\S2S\Api;
 
 use Mycom\Tracker\S2S\Api\Client\ClientInterface;
-use Mycom\Tracker\S2S\Api\Common\{Credentials, Gender};
+use Mycom\Tracker\S2S\Api\Common\{Credentials, Gender, Introductory, PaymentState};
 
 /**
  * Simple tracker s2s api example
@@ -454,8 +454,8 @@ class Example
         $params->priceCurrencyCode = 'USD';
         $params->priceAmountMicros = 5990000;
         $params->subscriptionId = 'monthly002';
-        $params->paymentState = '1';
-        $params->isIntroductory = 0;
+        $params->paymentState = PaymentState::RECEIVED;
+        $params->isIntroductory = Introductory::REGULAR;
         $params->startTimeMillis = 1693242344000;
         $params->expiryTimeMillis = 1693242344000;
 
@@ -497,8 +497,8 @@ class Example
         $params->priceCurrencyCode = 'USD';
         $params->priceAmountMicros = 5990000;
         $params->subscriptionId = 'monthly002';
-        $params->paymentState = '1';
-        $params->isIntroductory = 0;
+        $params->paymentState = PaymentState::RECEIVED;
+        $params->isIntroductory = Introductory::REGULAR;
         $params->startTimeMillis = 1693242344000;
         $params->expiryTimeMillis = 1693242344000;
 

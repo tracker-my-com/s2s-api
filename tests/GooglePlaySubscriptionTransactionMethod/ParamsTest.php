@@ -73,8 +73,7 @@ class ParamsTest extends TestCase
         return [
             'orderId' => ['orderId'],
             'priceCurrencyCode' => ['priceCurrencyCode'],
-            'subscriptionId' => ['subscriptionId'],
-            'paymentState' => ['paymentState']
+            'subscriptionId' => ['subscriptionId']
         ];
     }
 
@@ -108,7 +107,8 @@ class ParamsTest extends TestCase
             'priceAmountMicros' => ['priceAmountMicros'],
             'isIntroductory' => ['isIntroductory'],
             'startTimeMillis' => ['startTimeMillis'],
-            'expiryTimeMillis' => ['expiryTimeMillis']
+            'expiryTimeMillis' => ['expiryTimeMillis'],
+            'paymentState' => ['paymentState']
         ];
     }
 }

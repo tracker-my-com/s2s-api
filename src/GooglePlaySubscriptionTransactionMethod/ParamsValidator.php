@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Mycom\Tracker\S2S\Api\GooglePlaySubscriptionTransactionMethod;
 
+use Mycom\Tracker\S2S\Api\Common\Introductory;
+use Mycom\Tracker\S2S\Api\Common\PaymentState;
 use Mycom\Tracker\S2S\Api\Exception\InvalidArgumentException;
 use Mycom\Tracker\S2S\Api\Validator\ValidatorInterface;
 
@@ -54,19 +56,20 @@ final class ParamsValidator implements ValidatorInterface
         }
 
         if ($this->params->paymentState !== null) {
-            if (!is_numeric($this->params->paymentState)) {
-                throw new InvalidArgumentException("paymentState must be string with number");
-            }
-
-            $paymentState = intval($this->params->paymentState);
-            if ($paymentState != 1 && $paymentState != 2) {
-                throw new InvalidArgumentException("paymentState must be 1 or 2");
+            if (
+                $this->params->paymentState != PaymentState::RECEIVED
+                && $this->params->paymentState != PaymentState::TRIAL
+            ) {
+                throw new InvalidArgumentException("paymentState must be RECEIVED or TRIAL");
             }
         }
 
-        if (!empty($this->params->isIntroductory)) {
-            if ($this->params->isIntroductory != 0 && $this->params->isIntroductory != 1) {
-                throw new InvalidArgumentException("isIntroductory must be 0 or 1");
+        if ($this->params->isIntroductory !== null) {
+            if (
+                $this->params->isIntroductory != Introductory::INTRODUCTORY
+                && $this->params->isIntroductory != Introductory::REGULAR
+            ) {
+                throw new InvalidArgumentException("isIntroductory must be REGULAR or INTRODUCTORY");
             }
         }
     }

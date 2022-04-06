@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MycomTest\Tracker\S2S\Api\GooglePlaySubscriptionTransactionMethod;
 
+use Mycom\Tracker\S2S\Api\Common\Introductory;
+use Mycom\Tracker\S2S\Api\Common\PaymentState;
 use Mycom\Tracker\S2S\Api\Exception\InvalidArgumentException;
 use Mycom\Tracker\S2S\Api\GooglePlaySubscriptionTransactionMethod\Params;
 use Mycom\Tracker\S2S\Api\GooglePlaySubscriptionTransactionMethod\ParamsValidator;
@@ -128,25 +130,15 @@ class ParamsValidatorTest extends TestCase
                 ]),
                 'error' => 'subscriptionId param is required',
             ],
-            'paymentState no number string' => [
-                'params' => $createParams([
-                    'orderId' => 'orderId',
-                    'priceCurrencyCode' => 'RUB',
-                    'priceAmountMicros' => 1990000,
-                    'subscriptionId' => 'subscriptionId',
-                    'paymentState' => 'paymentState'
-                ]),
-                'error' => 'paymentState must be string with number',
-            ],
             'paymentState big number' => [
                 'params' => $createParams([
                     'orderId' => 'orderId',
                     'priceCurrencyCode' => 'RUB',
                     'priceAmountMicros' => 1990000,
                     'subscriptionId' => 'subscriptionId',
-                    'paymentState' => '3'
+                    'paymentState' => 3
                 ]),
-                'error' => 'paymentState must be 1 or 2',
+                'error' => 'paymentState must be RECEIVED or TRIAL',
             ],
             'paymentState small number' => [
                 'params' => $createParams([
@@ -154,9 +146,9 @@ class ParamsValidatorTest extends TestCase
                     'priceCurrencyCode' => 'RUB',
                     'priceAmountMicros' => 1990000,
                     'subscriptionId' => 'subscriptionId',
-                    'paymentState' => '-1'
+                    'paymentState' => -1
                 ]),
-                'error' => 'paymentState must be 1 or 2',
+                'error' => 'paymentState must be RECEIVED or TRIAL',
             ],
             'paymentState correct number' => [
                 'params' => $createParams([
@@ -164,7 +156,7 @@ class ParamsValidatorTest extends TestCase
                     'priceCurrencyCode' => 'RUB',
                     'priceAmountMicros' => 1990000,
                     'subscriptionId' => 'subscriptionId',
-                    'paymentState' => '1'
+                    'paymentState' => PaymentState::RECEIVED
                 ]),
                 'error' => null,
             ],
@@ -176,7 +168,7 @@ class ParamsValidatorTest extends TestCase
                     'subscriptionId' => 'subscriptionId',
                     'isIntroductory' => 3
                 ]),
-                'error' => 'isIntroductory must be 0 or 1',
+                'error' => 'isIntroductory must be REGULAR or INTRODUCTORY',
             ],
             'isIntroductory small number' => [
                 'params' => $createParams([
@@ -186,7 +178,7 @@ class ParamsValidatorTest extends TestCase
                     'subscriptionId' => 'subscriptionId',
                     'isIntroductory' => -1
                 ]),
-                'error' => 'isIntroductory must be 0 or 1',
+                'error' => 'isIntroductory must be REGULAR or INTRODUCTORY',
             ],
             'isIntroductory correct number' => [
                 'params' => $createParams([
@@ -194,7 +186,7 @@ class ParamsValidatorTest extends TestCase
                     'priceCurrencyCode' => 'RUB',
                     'priceAmountMicros' => 1990000,
                     'subscriptionId' => 'subscriptionId',
-                    'isIntroductory' => 0
+                    'isIntroductory' => Introductory::REGULAR
                 ]),
                 'error' => null,
             ]
