@@ -23,7 +23,7 @@ abstract class BatchMethod implements MethodInterface
     /** @var int */
     private int $idApp;
 
-    /** @var BaseParams[] */
+    /** @var array */
     protected array $batch = [];
 
     /**
