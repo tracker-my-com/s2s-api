@@ -16,22 +16,13 @@ final class GooglePlayProductTransactionBatchMethod extends BatchMethod
     /** @var string method name */
     private const URI = 'googlePlayProductTransactionBatch';
 
-    /**
-     * googlePlayProductTransaction constructor.
-     *
-     * @param CredentialsInterface $credentials
-     * @param int                  $idApp
-     */
+    /** @inheritDoc */
     public function __construct(CredentialsInterface $credentials, int $idApp)
     {
         parent::__construct(self::URI, $credentials, $idApp);
     }
 
-    /**
-     * Add new params to batch
-     *
-     * @return Params
-     */
+    /** @inheritDoc */
     public function addParams(): Params
     {
         $params = new Params();

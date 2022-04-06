@@ -45,8 +45,6 @@ final class Params extends BaseParams
 
     /**
      * The payment state of the subscription:
-     * 1 — received
-     * 2 — trial
      *
      * @see PaymentState for payment values.
      * @var int|null
@@ -55,8 +53,6 @@ final class Params extends BaseParams
 
     /**
      * Introductory price information of the subscription:
-     * 0 — regular price
-     * 1 — introductory price
      *
      * @see Introductory for introductory values.
      * @var int|null
