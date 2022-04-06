@@ -4,47 +4,25 @@ declare(strict_types=1);
 
 namespace Mycom\Tracker\S2S\Api;
 
-use GuzzleHttp\RequestOptions;
-use Mycom\Tracker\S2S\Api\Client\{ClientInterface, Method};
-use Mycom\Tracker\S2S\Api\Exception\InvalidArgumentException;
+use Mycom\Tracker\S2S\Api\Client\{BatchMethod};
 use Mycom\Tracker\S2S\Api\Common\CredentialsInterface;
 use Mycom\Tracker\S2S\Api\GooglePlaySubscriptionTokenMethod\{Params, ParamsValidator};
 
 /**
  * Google play subscription token batch command implementation
  */
-final class GooglePlaySubscriptionTokenBatchMethod extends Method
+final class GooglePlaySubscriptionTokenBatchMethod extends BatchMethod
 {
     /** @var string method name */
     private const URI = 'googlePlaySubscriptionTokenBatch';
 
-    /** @var CredentialsInterface */
-    private CredentialsInterface $credentials;
-
-    /** @var int */
-    private int $idApp;
-
-    /** @var Params[] */
-    private array $batch = [];
-
-    /**
-     * GooglePlaySubscriptionTokenBatchMethod constructor.
-     *
-     * @param CredentialsInterface $credentials
-     * @param int                  $idApp
-     */
+    /** @inheritDoc */
     public function __construct(CredentialsInterface $credentials, int $idApp)
     {
-        parent::__construct(self::URI);
-        $this->credentials = $credentials;
-        $this->idApp = $idApp;
+        parent::__construct(self::URI, $credentials, $idApp);
     }
 
-    /**
-     * Add new params to batch
-     *
-     * @return Params
-     */
+    /** @inheritDoc */
     public function addParams(): Params
     {
         $params = new Params();
@@ -56,30 +34,9 @@ final class GooglePlaySubscriptionTokenBatchMethod extends Method
     /** @inheritDoc */
     public function validate(): void
     {
-        if (empty($this->batch)) {
-            throw new InvalidArgumentException('Empty params batch');
-        }
-
-        if (\count($this->batch) > 20) {
-            throw new InvalidArgumentException('Batch expected to be below 20');
-        }
-
+        parent::validate();
         foreach ($this->batch as $param) {
             (new ParamsValidator($param))->validate();
         }
-    }
-
-    /** @inheritDoc */
-    public function getRequestOptions(): array
-    {
-        return [
-            RequestOptions::HEADERS => [
-                ClientInterface::AUTH_HEADER_NAME => $this->credentials->getToken(),
-            ],
-            RequestOptions::QUERY => [
-                'idApp' => $this->idApp,
-            ],
-            RequestOptions::JSON => \array_map(static fn(Params $params): array => $params->toArray(), $this->batch),
-        ];
     }
 }
