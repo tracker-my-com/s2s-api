@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Mycom\Tracker\S2S\Api;
 
 use Mycom\Tracker\S2S\Api\Client\ClientInterface;
-use Mycom\Tracker\S2S\Api\Common\{Credentials, Gender};
+use Mycom\Tracker\S2S\Api\Common\{Credentials, Gender, Introductory, PaymentState};
 
 /**
  * Simple tracker s2s api example
@@ -328,6 +328,7 @@ class Example
 
         $client->request($customRevenueBatchMethod);
     }
+
     /**
      * Google play product transaction exapmle
      *
@@ -412,5 +413,95 @@ class Example
         $params->revenue = 20.0;
 
         $client->request($googlePlayProductTransaction);
+    }
+
+    /**
+     * Google play subscription transaction exapmle
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendGooglePlaySubscriptionTransaction(int $appId, string $accountToken, ClientInterface $client = null): void
+    {
+        $client ??= Client::getDefault();
+
+        // prepare google play subscription transaction method instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $googlePlaySubscriptionTransaction = new GooglePlaySubscriptionTransactionMethod($accountCredentials, $appId);
+
+        // send our data
+        $params = $googlePlaySubscriptionTransaction->params();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->orderId = '234-1234-1234-12345';
+        $params->priceCurrencyCode = 'USD';
+        $params->priceAmountMicros = 1990000;
+        $params->subscriptionId = 'monthly001';
+
+        $client->request($googlePlaySubscriptionTransaction);
+
+        // cleanup method params before next call
+        $params->reset();
+
+        // send our next transaction
+        $params->customUserId = '500100';
+        $params->eventTimestamp = time();
+        $params->orderId = '234-1234-1234-54321';
+        $params->priceCurrencyCode = 'USD';
+        $params->priceAmountMicros = 5990000;
+        $params->subscriptionId = 'monthly002';
+        $params->paymentState = PaymentState::RECEIVED;
+        $params->isIntroductory = Introductory::REGULAR;
+        $params->startTimeMillis = 1693242344000;
+        $params->expiryTimeMillis = 1693242344000;
+
+        $client->request($googlePlaySubscriptionTransaction);
+    }
+
+    /**
+     * Google play subscription transaction batch exapmle
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendGooglePlaySubscriptionTransactionBatch(int $appId, string $accountToken, ClientInterface $client = null): void
+    {
+        $client ??= Client::getDefault();
+
+        // prepare google play subscription transaction method instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $googlePlaySubscriptionTransaction = new GooglePlaySubscriptionTransactionBatchMethod($accountCredentials, $appId);
+
+        // prepare our first event
+        $params = $googlePlaySubscriptionTransaction->addParams();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->orderId = '234-1234-4321-12345';
+        $params->priceCurrencyCode = 'USD';
+        $params->priceAmountMicros = 1990000;
+        $params->subscriptionId = 'monthly001';
+
+        // prepare our second event
+        $params = $googlePlaySubscriptionTransaction->addParams();
+        $params->customUserId = '500100';
+        $params->eventTimestamp = time();
+        $params->orderId = '2345-1234-1234-12345';
+        $params->priceCurrencyCode = 'USD';
+        $params->priceAmountMicros = 5990000;
+        $params->subscriptionId = 'monthly002';
+        $params->paymentState = PaymentState::RECEIVED;
+        $params->isIntroductory = Introductory::REGULAR;
+        $params->startTimeMillis = 1693242344000;
+        $params->expiryTimeMillis = 1693242344000;
+
+        $client->request($googlePlaySubscriptionTransaction);
     }
 }

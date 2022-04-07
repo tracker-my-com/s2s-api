@@ -6,23 +6,32 @@ namespace Mycom\Tracker\S2S\Api;
 
 use Mycom\Tracker\S2S\Api\Client\BatchMethod;
 use Mycom\Tracker\S2S\Api\Common\CredentialsInterface;
-use Mycom\Tracker\S2S\Api\GooglePlayProductTransactionMethod\{Params, ParamsValidator};
+use Mycom\Tracker\S2S\Api\GooglePlaySubscriptionTransactionMethod\{Params, ParamsValidator};
 
 /**
- * Google play product transaction batch command implementation
+ * Google play subscription transaction batch command implementation
  */
-final class GooglePlayProductTransactionBatchMethod extends BatchMethod
+final class GooglePlaySubscriptionTransactionBatchMethod extends BatchMethod
 {
     /** @var string method name */
-    private const URI = 'googlePlayProductTransactionBatch';
+    private const URI = 'googlePlaySubscriptionTransactionBatch';
 
-    /** @inheritDoc */
+    /**
+     * GooglePlaySubscriptionTransactionBatchMethod constructor.
+     *
+     * @param CredentialsInterface $credentials
+     * @param int                  $idApp
+     */
     public function __construct(CredentialsInterface $credentials, int $idApp)
     {
         parent::__construct(self::URI, $credentials, $idApp);
     }
 
-    /** @inheritDoc */
+    /**
+     * Add new params to batch
+     *
+     * @return Params
+     */
     public function addParams(): Params
     {
         $params = new Params();
