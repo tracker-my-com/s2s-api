@@ -586,4 +586,88 @@ class Example
 
         $client->request($googlePlaySubscriptionToken);
     }
+
+    /**
+     * App store product transaction example
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendAppStoreProductTransaction(int $appId, string $accountToken, ClientInterface $client = null): void
+    {
+        $client ??= Client::getDefault();
+
+        // prepare App store product transaction example instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $appStoreProductTransaction = new AppStoreProductTransactionMethod($accountCredentials, $appId);
+
+        // send our data
+        $params = $appStoreProductTransaction->params();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+
+        $client->request($appStoreProductTransaction);
+
+        // cleanup method params before next call
+        $params->reset();
+
+        // send our next transaction
+        $params->customUserId = '500100';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+        $params->quantity = 1;
+
+        $client->request($appStoreProductTransaction);
+    }
+
+    /**
+     * App store product transaction batch example
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendAppStoreProductTransactionBatch(int $appId, string $accountToken, ClientInterface $client = null): void
+    {
+        $client ??= Client::getDefault();
+
+        // prepare app store product transaction batch example instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $googlePlaySubscriptionToken = new AppStoreProductTransactionBatchMethod($accountCredentials, $appId);
+
+        // prepare our first event
+        $params = $googlePlaySubscriptionToken->addParams();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+
+        // prepare our second event
+        $params = $googlePlaySubscriptionToken->addParams();
+        $params->customUserId = '500100';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+        $params->quantity = 1;
+
+        $client->request($googlePlaySubscriptionToken);
+    }
 }

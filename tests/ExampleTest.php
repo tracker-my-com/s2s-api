@@ -6,6 +6,8 @@ namespace MycomTest\Tracker\S2S\Api;
 
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\RequestOptions;
+use Mycom\Tracker\S2S\Api\AppStoreProductTransactionBatchMethod;
+use Mycom\Tracker\S2S\Api\AppStoreProductTransactionMethod;
 use Mycom\Tracker\S2S\Api\Client\ClientInterface;
 use Mycom\Tracker\S2S\Api\Client\MethodInterface;
 use Mycom\Tracker\S2S\Api\CustomEventBatchMethod;
@@ -694,5 +696,99 @@ class ExampleTest extends TestCase
             });
 
         Example::sendGooglePlaySubscriptionTokenBatch(1, 'secret', $client);
+    }
+
+    /**
+     * @covers ::sendAppStoreProductTransaction
+     * @return void
+     */
+    public function testSendAppStoreProductTransaction(): void
+    {
+        $client = $this->createMock(ClientInterface::class);
+        $client
+            ->expects(self::at(0))
+            ->method('request')
+            ->willReturnCallback(static function (MethodInterface $method): ResponseInterface {
+                self::assertInstanceOf(AppStoreProductTransactionMethod::class, $method);
+                self::assertEquals('appStoreProductTransaction', $method->getUri());
+                self::assertEquals([
+                    RequestOptions::HEADERS => [ClientInterface::AUTH_HEADER_NAME => 'secret'],
+                    RequestOptions::QUERY => ['idApp' => 1],
+                    RequestOptions::JSON => [
+                        'customUserId' => '100500',
+                        'eventTimestamp' => time(),
+                        'transactionId' => '1234567890098765',
+                        'productId' => '001',
+                        'price' => 1.99,
+                        'currency' => 'USD'
+                    ],
+                ], $method->getRequestOptions());
+                return new Response(200, [], 'OK');
+            });
+        $client
+            ->expects(self::at(1))
+            ->method('request')
+            ->willReturnCallback(static function (MethodInterface $method): ResponseInterface {
+                self::assertInstanceOf(AppStoreProductTransactionMethod::class, $method);
+                self::assertEquals('appStoreProductTransaction', $method->getUri());
+                self::assertEquals([
+                    RequestOptions::HEADERS => [ClientInterface::AUTH_HEADER_NAME => 'secret'],
+                    RequestOptions::QUERY => ['idApp' => 1],
+                    RequestOptions::JSON => [
+                        'customUserId' => '500100',
+                        'eventTimestamp' => time(),
+                        'transactionId' => '1234567890098765',
+                        'productId' => '001',
+                        'price' => 1.99,
+                        'currency' => 'USD',
+                        'quantity' => 1
+                    ],
+                ], $method->getRequestOptions());
+                return new Response(200, [], 'OK');
+            });
+
+        Example::sendAppStoreProductTransaction(1, 'secret', $client);
+    }
+
+    /**
+     * @covers ::sendAppStoreProductTransactionBatch
+     * @return void
+     */
+    public function testSendAppStoreProductTransactionBatch(): void
+    {
+        $client = $this->createMock(ClientInterface::class);
+        $client
+            ->expects(self::once())
+            ->method('request')
+            ->willReturnCallback(static function (MethodInterface $method): ResponseInterface {
+                self::assertInstanceOf(AppStoreProductTransactionBatchMethod::class, $method);
+                self::assertEquals('appStoreProductTransactionBatch', $method->getUri());
+                self::assertEquals([
+                    RequestOptions::HEADERS => [ClientInterface::AUTH_HEADER_NAME => 'secret'],
+                    RequestOptions::QUERY => ['idApp' => 1],
+                    RequestOptions::JSON => [
+                        [
+                            'customUserId' => '100500',
+                            'eventTimestamp' => time(),
+                            'transactionId' => '1234567890098765',
+                            'productId' => '001',
+                            'price' => 1.99,
+                            'currency' => 'USD'
+                        ],
+                        [
+                            'customUserId' => '500100',
+                            'eventTimestamp' => time(),
+                            'transactionId' => '1234567890098765',
+                            'productId' => '001',
+                            'price' => 1.99,
+                            'currency' => 'USD',
+                            'quantity' => 1
+                        ],
+                    ],
+                ], $method->getRequestOptions());
+                return new Response(200, [], 'OK');
+            });
+
+        Example::sendAppStoreProductTransactionBatch(1, 'secret', $client);
     }
 }
