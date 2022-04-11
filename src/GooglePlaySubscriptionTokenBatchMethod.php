@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Mycom\Tracker\S2S\Api;
 
-use Mycom\Tracker\S2S\Api\Client\{BatchMethod};
+use Mycom\Tracker\S2S\Api\Client\BatchMethod;
 use Mycom\Tracker\S2S\Api\Common\CredentialsInterface;
 use Mycom\Tracker\S2S\Api\GooglePlaySubscriptionTokenMethod\{Params, ParamsValidator};
 
