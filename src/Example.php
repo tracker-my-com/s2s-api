@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Mycom\Tracker\S2S\Api;
 
 use Mycom\Tracker\S2S\Api\Client\ClientInterface;
-use Mycom\Tracker\S2S\Api\Common\{Credentials, Gender, Introductory, PaymentState};
+use Mycom\Tracker\S2S\Api\Common\{Credentials, Gender, Introductory, PaymentState, Trial};
 
 /**
  * Simple tracker s2s api example
@@ -647,10 +647,10 @@ class Example
 
         // prepare app store product transaction batch example instance for specified application
         $accountCredentials = new Credentials($accountToken);
-        $googlePlaySubscriptionToken = new AppStoreProductTransactionBatchMethod($accountCredentials, $appId);
+        $appStoreProductTransaction = new AppStoreProductTransactionBatchMethod($accountCredentials, $appId);
 
         // prepare our first event
-        $params = $googlePlaySubscriptionToken->addParams();
+        $params = $appStoreProductTransaction->addParams();
         $params->customUserId = '100500';
         $params->eventTimestamp = time();
         $params->transactionId = '1234567890098765';
@@ -659,7 +659,7 @@ class Example
         $params->currency = 'USD';
 
         // prepare our second event
-        $params = $googlePlaySubscriptionToken->addParams();
+        $params = $appStoreProductTransaction->addParams();
         $params->customUserId = '500100';
         $params->eventTimestamp = time();
         $params->transactionId = '1234567890098765';
@@ -668,6 +668,102 @@ class Example
         $params->currency = 'USD';
         $params->quantity = 1;
 
-        $client->request($googlePlaySubscriptionToken);
+        $client->request($appStoreProductTransaction);
+    }
+
+    /**
+     * App store subscription transaction example
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendAppStoreSubscriptionTransaction(int $appId, string $accountToken, ClientInterface $client = null): void
+    {
+        $client ??= Client::getDefault();
+
+        // prepare App store subscription transaction example instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $appStoreSubscriptionTransaction = new AppStoreSubscriptionTransactionMethod($accountCredentials, $appId);
+
+        // send our data
+        $params = $appStoreSubscriptionTransaction->params();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+        $params->transactionIdOriginal = '1234567890098765';
+
+        $client->request($appStoreSubscriptionTransaction);
+
+        // cleanup method params before next call
+        $params->reset();
+
+        // send our next transaction
+        $params->customUserId = '500100';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+        $params->transactionIdOriginal = '1234567890098765';
+        $params->isTrial = Trial::COMMON;
+        $params->isIntroductory = Introductory::REGULAR;
+        $params->tsPaymentOriginal = time();
+        $params->tsPaymentExpires = time();
+        $params->quantity = 1;
+
+        $client->request($appStoreSubscriptionTransaction);
+    }
+
+    /**
+     * App store subscription transaction batch example
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendAppStoreSubscriptionTransactionBatch(int $appId, string $accountToken, ClientInterface $client = null): void
+    {
+        $client ??= Client::getDefault();
+
+        // prepare app store subscription transaction batch example instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $appStoreSubscriptionTransaction = new AppStoreSubscriptionTransactionBatchMethod($accountCredentials, $appId);
+
+        // prepare our first event
+        $params = $appStoreSubscriptionTransaction->addParams();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+        $params->transactionIdOriginal = '1234567890098765';
+
+        // prepare our second event
+        $params = $appStoreSubscriptionTransaction->addParams();
+        $params->customUserId = '500100';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+        $params->transactionIdOriginal = '1234567890098765';
+        $params->isTrial = Trial::COMMON;
+        $params->isIntroductory = Introductory::REGULAR;
+        $params->tsPaymentOriginal = time();
+        $params->tsPaymentExpires = time();
+        $params->quantity = 1;
+
+        $client->request($appStoreSubscriptionTransaction);
     }
 }

@@ -8,8 +8,12 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\RequestOptions;
 use Mycom\Tracker\S2S\Api\AppStoreProductTransactionBatchMethod;
 use Mycom\Tracker\S2S\Api\AppStoreProductTransactionMethod;
+use Mycom\Tracker\S2S\Api\AppStoreSubscriptionTransactionBatchMethod;
+use Mycom\Tracker\S2S\Api\AppStoreSubscriptionTransactionMethod;
 use Mycom\Tracker\S2S\Api\Client\ClientInterface;
 use Mycom\Tracker\S2S\Api\Client\MethodInterface;
+use Mycom\Tracker\S2S\Api\Common\Introductory;
+use Mycom\Tracker\S2S\Api\Common\Trial;
 use Mycom\Tracker\S2S\Api\CustomEventBatchMethod;
 use Mycom\Tracker\S2S\Api\CustomEventMethod;
 use Mycom\Tracker\S2S\Api\CustomRevenueBatchMethod;
@@ -790,5 +794,111 @@ class ExampleTest extends TestCase
             });
 
         Example::sendAppStoreProductTransactionBatch(1, 'secret', $client);
+    }
+
+    /**
+     * @covers ::sendAppStoreSubscriptionTransaction
+     * @return void
+     */
+    public function testSendAppStoreSubscriptionTransaction(): void
+    {
+        $client = $this->createMock(ClientInterface::class);
+        $client
+            ->expects(self::at(0))
+            ->method('request')
+            ->willReturnCallback(static function (MethodInterface $method): ResponseInterface {
+                self::assertInstanceOf(AppStoreSubscriptionTransactionMethod::class, $method);
+                self::assertEquals('appStoreSubscriptionTransaction', $method->getUri());
+                self::assertEquals([
+                    RequestOptions::HEADERS => [ClientInterface::AUTH_HEADER_NAME => 'secret'],
+                    RequestOptions::QUERY => ['idApp' => 1],
+                    RequestOptions::JSON => [
+                        'transactionId' => '1234567890098765',
+                        'productId' => '001',
+                        'price' => 1.99,
+                        'currency' => 'USD',
+                        'transactionIdOriginal' => '1234567890098765',
+                        'eventTimestamp' => time(),
+                        'customUserId' => '100500',
+                    ],
+                ], $method->getRequestOptions());
+                return new Response(200, [], 'OK');
+            });
+        $client
+            ->expects(self::at(1))
+            ->method('request')
+            ->willReturnCallback(static function (MethodInterface $method): ResponseInterface {
+                self::assertInstanceOf(AppStoreSubscriptionTransactionMethod::class, $method);
+                self::assertEquals('appStoreSubscriptionTransaction', $method->getUri());
+                self::assertEquals([
+                    RequestOptions::HEADERS => [ClientInterface::AUTH_HEADER_NAME => 'secret'],
+                    RequestOptions::QUERY => ['idApp' => 1],
+                    RequestOptions::JSON => [
+                        'customUserId' => '500100',
+                        'eventTimestamp' => time(),
+                        'transactionId' => '1234567890098765',
+                        'productId' => '001',
+                        'price' => 1.99,
+                        'currency' => 'USD',
+                        'quantity' => 1,
+                        'transactionIdOriginal' => '1234567890098765',
+                        'isTrial' => Trial::COMMON,
+                        'isIntroductory' => Introductory::REGULAR,
+                        'tsPaymentOriginal' => time(),
+                        'tsPaymentExpires' => time(),
+                    ],
+                ], $method->getRequestOptions());
+                return new Response(200, [], 'OK');
+            });
+
+        Example::sendAppStoreSubscriptionTransaction(1, 'secret', $client);
+    }
+
+    /**
+     * @covers ::sendAppStoreSubscriptionTransactionBatch
+     * @return void
+     */
+    public function testSendAppStoreSubscriptionTransactionBatch(): void
+    {
+        $client = $this->createMock(ClientInterface::class);
+        $client
+            ->expects(self::once())
+            ->method('request')
+            ->willReturnCallback(static function (MethodInterface $method): ResponseInterface {
+                self::assertInstanceOf(AppStoreSubscriptionTransactionBatchMethod::class, $method);
+                self::assertEquals('appStoreSubscriptionTransactionBatch', $method->getUri());
+                self::assertEquals([
+                    RequestOptions::HEADERS => [ClientInterface::AUTH_HEADER_NAME => 'secret'],
+                    RequestOptions::QUERY => ['idApp' => 1],
+                    RequestOptions::JSON => [
+                        [
+                            'transactionId' => '1234567890098765',
+                            'productId' => '001',
+                            'price' => 1.99,
+                            'currency' => 'USD',
+                            'transactionIdOriginal' => '1234567890098765',
+                            'eventTimestamp' => time(),
+                            'customUserId' => '100500',
+                        ],
+                        [
+                            'customUserId' => '500100',
+                            'eventTimestamp' => time(),
+                            'transactionId' => '1234567890098765',
+                            'productId' => '001',
+                            'price' => 1.99,
+                            'currency' => 'USD',
+                            'quantity' => 1,
+                            'transactionIdOriginal' => '1234567890098765',
+                            'isTrial' => Trial::COMMON,
+                            'isIntroductory' => Introductory::REGULAR,
+                            'tsPaymentOriginal' => time(),
+                            'tsPaymentExpires' => time(),
+                        ],
+                    ],
+                ], $method->getRequestOptions());
+                return new Response(200, [], 'OK');
+            });
+
+        Example::sendAppStoreSubscriptionTransactionBatch(1, 'secret', $client);
     }
 }
