@@ -766,4 +766,50 @@ class Example
 
         $client->request($appStoreSubscriptionTransaction);
     }
+
+    /**
+     * App store subscription receipt example
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendAppStoreSubscriptionReceipt(int $appId, string $accountToken, ClientInterface $client = null): void
+    {
+        $client ??= Client::getDefault();
+
+        // prepare app store subscription receipt example instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $appStoreSubscriptionReceipt = new AppStoreSubscriptionReceiptMethod($accountCredentials, $appId);
+
+        // send our data
+        $params = $appStoreSubscriptionReceipt->params();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->receipt = 'aaabbcbcac==';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+
+        $client->request($appStoreSubscriptionReceipt);
+
+        // cleanup method params before next call
+        $params->reset();
+
+        // send our next transaction
+        $params->customUserId = '500100';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->receipt = 'aaabbcbcac==';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+        $params->receipt_gz = 'receipt_gz';
+
+        $client->request($appStoreSubscriptionReceipt);
+    }
 }
