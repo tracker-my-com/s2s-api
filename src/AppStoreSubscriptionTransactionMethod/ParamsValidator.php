@@ -48,10 +48,6 @@ final class ParamsValidator implements ValidatorInterface
             }
         }
 
-        if ($this->params->price <= 0) {
-            throw new InvalidArgumentException("price must be positive number");
-        }
-
         if (strlen($this->params->currency) !== 3) {
             throw new InvalidArgumentException("currency must be 3 character code");
         }
@@ -75,6 +71,7 @@ final class ParamsValidator implements ValidatorInterface
         }
 
         $positivValueParams = [
+            'price' => $this->params->price,
             'tsPaymentOriginal' => $this->params->tsPaymentOriginal,
             'tsPaymentExpires' => $this->params->tsPaymentExpires,
             'quantity' => $this->params->quantity
