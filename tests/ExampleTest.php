@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\RequestOptions;
 use Mycom\Tracker\S2S\Api\AppStoreProductTransactionBatchMethod;
 use Mycom\Tracker\S2S\Api\AppStoreProductTransactionMethod;
+use Mycom\Tracker\S2S\Api\AppStoreSubscriptionReceiptMethod;
 use Mycom\Tracker\S2S\Api\AppStoreSubscriptionTransactionBatchMethod;
 use Mycom\Tracker\S2S\Api\AppStoreSubscriptionTransactionMethod;
 use Mycom\Tracker\S2S\Api\Client\ClientInterface;
@@ -900,5 +901,59 @@ class ExampleTest extends TestCase
             });
 
         Example::sendAppStoreSubscriptionTransactionBatch(1, 'secret', $client);
+    }
+
+    /**
+     * @covers ::sendAppStoreSubscriptionReceipt
+     * @return void
+     */
+    public function testSendAppStoreSubscriptionReceipt(): void
+    {
+        $client = $this->createMock(ClientInterface::class);
+        $client
+            ->expects(self::at(0))
+            ->method('request')
+            ->willReturnCallback(static function (MethodInterface $method): ResponseInterface {
+                self::assertInstanceOf(AppStoreSubscriptionReceiptMethod::class, $method);
+                self::assertEquals('appStoreSubscriptionReceipt', $method->getUri());
+                self::assertEquals([
+                    RequestOptions::HEADERS => [ClientInterface::AUTH_HEADER_NAME => 'secret'],
+                    RequestOptions::QUERY => ['idApp' => 1],
+                    RequestOptions::JSON => [
+                        'transactionId' => '1234567890098765',
+                        'productId' => '001',
+                        'price' => 1.99,
+                        'currency' => 'USD',
+                        'eventTimestamp' => time(),
+                        'customUserId' => '100500',
+                        'receipt' => 'aaabbcbcac=='
+                    ],
+                ], $method->getRequestOptions());
+                return new Response(200, [], 'OK');
+            });
+        $client
+            ->expects(self::at(1))
+            ->method('request')
+            ->willReturnCallback(static function (MethodInterface $method): ResponseInterface {
+                self::assertInstanceOf(AppStoreSubscriptionReceiptMethod::class, $method);
+                self::assertEquals('appStoreSubscriptionReceipt', $method->getUri());
+                self::assertEquals([
+                    RequestOptions::HEADERS => [ClientInterface::AUTH_HEADER_NAME => 'secret'],
+                    RequestOptions::QUERY => ['idApp' => 1],
+                    RequestOptions::JSON => [
+                        'customUserId' => '500100',
+                        'eventTimestamp' => time(),
+                        'transactionId' => '1234567890098765',
+                        'productId' => '001',
+                        'price' => 1.99,
+                        'currency' => 'USD',
+                        'receipt' => 'aaabbcbcac==',
+                        'receipt_gz' => 'receipt_gz'
+                    ],
+                ], $method->getRequestOptions());
+                return new Response(200, [], 'OK');
+            });
+
+        Example::sendAppStoreSubscriptionReceipt(1, 'secret', $client);
     }
 }
