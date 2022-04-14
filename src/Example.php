@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Mycom\Tracker\S2S\Api;
 
 use Mycom\Tracker\S2S\Api\Client\ClientInterface;
-use Mycom\Tracker\S2S\Api\Common\{Credentials, Gender, Introductory, PaymentState};
+use Mycom\Tracker\S2S\Api\Common\{Credentials, Gender, Introductory, PaymentState, Trial};
 
 /**
  * Simple tracker s2s api example
@@ -503,5 +503,316 @@ class Example
         $params->expiryTimeMillis = 1693242344000;
 
         $client->request($googlePlaySubscriptionTransaction);
+    }
+
+    /**
+     * Google play subscription token exapmle
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendGooglePlaySubscriptionToken(int $appId, string $accountToken, ClientInterface $client = null): void
+    {
+        $client ??= Client::getDefault();
+
+        // prepare google play subscription token method instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $googlePlaySubscriptionToken = new GooglePlaySubscriptionTokenMethod($accountCredentials, $appId);
+
+        // send our data
+        $params = $googlePlaySubscriptionToken->params();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->orderId = '234-1234-1234-12345';
+        $params->subscriptionId = 'monthly001';
+        $params->token = 'ofjkingojelmkmedpgfkfelj';
+        $params->subscriptionPeriod = 'P1M';
+
+        $client->request($googlePlaySubscriptionToken);
+
+        // cleanup method params before next call
+        $params->reset();
+
+        // send our next transaction
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->orderId = '234-1234-1234-12345';
+        $params->subscriptionId = 'monthly001';
+        $params->token = 'jlefkfgpdemkmlejognikjfo';
+        $params->subscriptionPeriod = 'P1M';
+
+        $client->request($googlePlaySubscriptionToken);
+    }
+
+    /**
+     * Google play subscription token batch exapmle
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendGooglePlaySubscriptionTokenBatch(int $appId, string $accountToken, ClientInterface $client = null): void
+    {
+        $client ??= Client::getDefault();
+
+        // prepare google play subscription token method instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $googlePlaySubscriptionToken = new GooglePlaySubscriptionTokenBatchMethod($accountCredentials, $appId);
+
+        // prepare our first event
+        $params = $googlePlaySubscriptionToken->addParams();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->orderId = '234-1234-1234-12345';
+        $params->subscriptionId = 'monthly001';
+        $params->token = 'ofjkingojelmkmedpgfkfelj';
+        $params->subscriptionPeriod = 'P1M';
+
+        // prepare our second event
+        $params = $googlePlaySubscriptionToken->addParams();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->orderId = '234-1234-1234-12345';
+        $params->subscriptionId = 'monthly001';
+        $params->token = 'jlefkfgpdemkmlejognikjfo';
+        $params->subscriptionPeriod = 'P1M';
+
+        $client->request($googlePlaySubscriptionToken);
+    }
+
+    /**
+     * App store product transaction example
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendAppStoreProductTransaction(int $appId, string $accountToken, ClientInterface $client = null): void
+    {
+        $client ??= Client::getDefault();
+
+        // prepare App store product transaction example instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $appStoreProductTransaction = new AppStoreProductTransactionMethod($accountCredentials, $appId);
+
+        // send our data
+        $params = $appStoreProductTransaction->params();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+
+        $client->request($appStoreProductTransaction);
+
+        // cleanup method params before next call
+        $params->reset();
+
+        // send our next transaction
+        $params->customUserId = '500100';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+        $params->quantity = 1;
+
+        $client->request($appStoreProductTransaction);
+    }
+
+    /**
+     * App store product transaction batch example
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendAppStoreProductTransactionBatch(int $appId, string $accountToken, ClientInterface $client = null): void
+    {
+        $client ??= Client::getDefault();
+
+        // prepare app store product transaction batch example instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $appStoreProductTransaction = new AppStoreProductTransactionBatchMethod($accountCredentials, $appId);
+
+        // prepare our first event
+        $params = $appStoreProductTransaction->addParams();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+
+        // prepare our second event
+        $params = $appStoreProductTransaction->addParams();
+        $params->customUserId = '500100';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+        $params->quantity = 1;
+
+        $client->request($appStoreProductTransaction);
+    }
+
+    /**
+     * App store subscription transaction example
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendAppStoreSubscriptionTransaction(int $appId, string $accountToken, ClientInterface $client = null): void
+    {
+        $client ??= Client::getDefault();
+
+        // prepare App store subscription transaction example instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $appStoreSubscriptionTransaction = new AppStoreSubscriptionTransactionMethod($accountCredentials, $appId);
+
+        // send our data
+        $params = $appStoreSubscriptionTransaction->params();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+        $params->transactionIdOriginal = '1234567890098765';
+
+        $client->request($appStoreSubscriptionTransaction);
+
+        // cleanup method params before next call
+        $params->reset();
+
+        // send our next transaction
+        $params->customUserId = '500100';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+        $params->transactionIdOriginal = '1234567890098765';
+        $params->isTrial = Trial::COMMON;
+        $params->isIntroductory = Introductory::REGULAR;
+        $params->tsPaymentOriginal = time();
+        $params->tsPaymentExpires = time();
+        $params->quantity = 1;
+
+        $client->request($appStoreSubscriptionTransaction);
+    }
+
+    /**
+     * App store subscription transaction batch example
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendAppStoreSubscriptionTransactionBatch(int $appId, string $accountToken, ClientInterface $client = null): void
+    {
+        $client ??= Client::getDefault();
+
+        // prepare app store subscription transaction batch example instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $appStoreSubscriptionTransaction = new AppStoreSubscriptionTransactionBatchMethod($accountCredentials, $appId);
+
+        // prepare our first event
+        $params = $appStoreSubscriptionTransaction->addParams();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+        $params->transactionIdOriginal = '1234567890098765';
+
+        // prepare our second event
+        $params = $appStoreSubscriptionTransaction->addParams();
+        $params->customUserId = '500100';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+        $params->transactionIdOriginal = '1234567890098765';
+        $params->isTrial = Trial::COMMON;
+        $params->isIntroductory = Introductory::REGULAR;
+        $params->tsPaymentOriginal = time();
+        $params->tsPaymentExpires = time();
+        $params->quantity = 1;
+
+        $client->request($appStoreSubscriptionTransaction);
+    }
+
+    /**
+     * App store subscription receipt example
+     *
+     * @param int                  $appId        Your app ID in myTracker
+     * @param string               $accountToken Your account token in myTracker
+     * @param ClientInterface|null $client
+     *
+     * @return void
+     * @throws Exception\ExceptionInterface
+     */
+    public static function sendAppStoreSubscriptionReceipt(
+        int $appId,
+        string $accountToken,
+        ClientInterface $client = null
+    ): void {
+        $client ??= Client::getDefault();
+
+        // prepare app store subscription receipt example instance for specified application
+        $accountCredentials = new Credentials($accountToken);
+        $appStoreSubscriptionReceipt = new AppStoreSubscriptionReceiptMethod($accountCredentials, $appId);
+
+        // send our data
+        $params = $appStoreSubscriptionReceipt->params();
+        $params->customUserId = '100500';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->receipt = 'aaabbcbcac==';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+
+        $client->request($appStoreSubscriptionReceipt);
+
+        // cleanup method params before next call
+        $params->reset();
+
+        // send our next transaction
+        $params->customUserId = '500100';
+        $params->eventTimestamp = time();
+        $params->transactionId = '1234567890098765';
+        $params->productId = '001';
+        $params->receipt = 'aaabbcbcac==';
+        $params->price = 1.99;
+        $params->currency = 'USD';
+        $params->receipt_gz = 'receipt_gz';
+
+        $client->request($appStoreSubscriptionReceipt);
     }
 }
