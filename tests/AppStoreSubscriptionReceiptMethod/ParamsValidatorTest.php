@@ -83,6 +83,16 @@ class ParamsValidatorTest extends TestCase
                 ]),
                 'error' => 'receipt param is required',
             ],
+            'receipt invalid' => [
+                'params' => $createParams([
+                    'transactionId' => 'transactionId',
+                    'productId' => 'productId',
+                    'receipt' => 'hello world',
+                    'currency' => 'rub',
+                    'price' => 1,
+                ]),
+                'error' => 'receipt must be valid base64 string',
+            ],
             'price not set' => [
                 'params' => $createParams([
                     'transactionId' => 'transactionId',

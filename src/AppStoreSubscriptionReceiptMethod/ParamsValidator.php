@@ -53,5 +53,9 @@ final class ParamsValidator implements ValidatorInterface
         if (strlen($this->params->currency) !== 3) {
             throw new InvalidArgumentException("currency must be 3 character code");
         }
+
+        if (!preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $this->params->receipt)) {
+            throw new InvalidArgumentException("receipt must be valid base64 string");
+        }
     }
 }
