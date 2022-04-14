@@ -81,7 +81,7 @@ class ParamsTest extends TestCase
     /**
      * @return void
      */
-    public function testfloatParam(): void
+    public function testFloatParam(): void
     {
         $params = new Params();
         self::assertNull($params->price);
