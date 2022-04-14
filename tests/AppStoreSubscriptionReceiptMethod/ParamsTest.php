@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace MycomTest\Tracker\S2S\Api\AppStoreProductTransactionMethod;
+namespace MycomTest\Tracker\S2S\Api\AppStoreSubscriptionReceiptMethod;
 
-use Mycom\Tracker\S2S\Api\AppStoreProductTransactionMethod\Params;
+use Mycom\Tracker\S2S\Api\AppStoreSubscriptionReceiptMethod\Params;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \Mycom\Tracker\S2S\Api\AppStoreProductTransactionMethod\Params
+ * @coversDefaultClass \Mycom\Tracker\S2S\Api\AppStoreSubscriptionReceiptMethod\Params
  */
 class ParamsTest extends TestCase
 {
@@ -35,7 +35,7 @@ class ParamsTest extends TestCase
 
     /**
      * @param string $paramName
-     * @covers ::toArray
+     *
      * @return void
      * @dataProvider providerStringParams
      */
@@ -51,7 +51,7 @@ class ParamsTest extends TestCase
 
     /**
      * @param string $paramName
-     * @covers ::reset
+     *
      * @return void
      * @dataProvider providerStringParams
      */
@@ -73,27 +73,10 @@ class ParamsTest extends TestCase
         return [
             'transactionId' => ['transactionId'],
             'productId' => ['productId'],
-            'currency' => ['currency']
+            'receipt' => ['receipt'],
+            'currency' => ['currency'],
+            'receipt_gz' => ['receipt_gz']
         ];
-    }
-
-    /**
-     * @return void
-     */
-    public function testIntParam(): void
-    {
-        $params = new Params();
-        self::assertNull($params->quantity);
-
-        $params->quantity = 1;
-        self::assertEquals(1, $params->quantity);
-
-        $params->quantity = 2;
-        self::assertEquals(2, $params->quantity);
-
-        $this->expectException(\TypeError::class);
-        /** @noinspection PhpStrictTypeCheckingInspection */
-        $params->quantity = "100500";
     }
 
     /**

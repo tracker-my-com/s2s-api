@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace MycomTest\Tracker\S2S\Api\AppStoreProductTransactionMethod;
+namespace MycomTest\Tracker\S2S\Api\AppStoreSubscriptionTransactionMethod;
 
-use Mycom\Tracker\S2S\Api\AppStoreProductTransactionMethod\Params;
+use Mycom\Tracker\S2S\Api\AppStoreSubscriptionTransactionMethod\Params;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \Mycom\Tracker\S2S\Api\AppStoreProductTransactionMethod\Params
+ * @coversDefaultClass \Mycom\Tracker\S2S\Api\AppStoreSubscriptionTransactionMethod\Params
  */
 class ParamsTest extends TestCase
 {
@@ -73,27 +73,9 @@ class ParamsTest extends TestCase
         return [
             'transactionId' => ['transactionId'],
             'productId' => ['productId'],
-            'currency' => ['currency']
+            'currency' => ['currency'],
+            'transactionIdOriginal' => ['transactionIdOriginal']
         ];
-    }
-
-    /**
-     * @return void
-     */
-    public function testIntParam(): void
-    {
-        $params = new Params();
-        self::assertNull($params->quantity);
-
-        $params->quantity = 1;
-        self::assertEquals(1, $params->quantity);
-
-        $params->quantity = 2;
-        self::assertEquals(2, $params->quantity);
-
-        $this->expectException(\TypeError::class);
-        /** @noinspection PhpStrictTypeCheckingInspection */
-        $params->quantity = "100500";
     }
 
     /**
@@ -113,5 +95,41 @@ class ParamsTest extends TestCase
         $this->expectException(\TypeError::class);
         /** @noinspection PhpStrictTypeCheckingInspection */
         $params->price = "100500";
+    }
+
+    /**
+     * @param string $paramName
+     *
+     * @return void
+     * @dataProvider providerIntParams
+     */
+    public function testIntParam(string $paramName): void
+    {
+        $params = new Params();
+        self::assertNull($params->$paramName);
+
+        $params->$paramName = 1;
+        self::assertEquals(1, $params->$paramName);
+
+        $params->$paramName = 2;
+        self::assertEquals(2, $params->$paramName);
+
+        $this->expectException(\TypeError::class);
+        /** @noinspection PhpStrictTypeCheckingInspection */
+        $params->$paramName = "100500";
+    }
+
+    /**
+     * @return array
+     */
+    public function providerIntParams(): array
+    {
+        return [
+            'isTrial' => ['isTrial'],
+            'isIntroductory' => ['isIntroductory'],
+            'tsPaymentOriginal' => ['tsPaymentOriginal'],
+            'tsPaymentExpires' => ['tsPaymentExpires'],
+            'quantity' => ['quantity']
+        ];
     }
 }
