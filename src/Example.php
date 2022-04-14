@@ -777,8 +777,11 @@ class Example
      * @return void
      * @throws Exception\ExceptionInterface
      */
-    public static function sendAppStoreSubscriptionReceipt(int $appId, string $accountToken, ClientInterface $client = null): void
-    {
+    public static function sendAppStoreSubscriptionReceipt(
+        int $appId,
+        string $accountToken,
+        ClientInterface $client = null
+    ): void {
         $client ??= Client::getDefault();
 
         // prepare app store subscription receipt example instance for specified application
