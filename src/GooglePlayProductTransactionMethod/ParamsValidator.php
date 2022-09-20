@@ -35,15 +35,26 @@ final class ParamsValidator implements ValidatorInterface
         $params = [
             'orderId' => $this->params->orderId,
             'productId' => $this->params->productId,
-            'token' => $this->params->token,
             'currency' => $this->params->currency,
-            'revenue' => $this->params->revenue
+            'revenue' => $this->params->revenue,
         ];
 
         foreach ($params as $paramName => $paramValue) {
             if ($paramValue === null || $paramValue === '') {
                 throw new InvalidArgumentException("$paramName param is required");
             }
+        }
+
+        if (!$this->params->token && !$this->params->isVerified) {
+            throw new InvalidArgumentException('One of the parameters must be passed: "token" or "isVerified"');
+        }
+
+        if ($this->params->token && $this->params->isVerified) {
+            throw new InvalidArgumentException('Exactly one of the parameters must be passed: "token" or "isVerified"');
+        }
+
+        if ($this->params->isVerified && $this->params->isVerified != 1) {
+            throw new InvalidArgumentException('isVerified must be 1');
         }
 
         if (strlen($this->params->currency) !== 3) {

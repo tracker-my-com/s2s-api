@@ -456,7 +456,7 @@ class ExampleTest extends TestCase
                         'customUserId' => '500100',
                         'orderId' => '321-4321-4321-54321',
                         'productId' => '002',
-                        'token' => 'jlefkfgpdemkmlejognikjfo',
+                        'isVerified' => 1,
                         'currency' => 'USD',
                         'revenue' => 20.0,
                         'eventTimestamp' => time()
@@ -498,7 +498,7 @@ class ExampleTest extends TestCase
                             'customUserId' => '500100',
                             'orderId' => '321-4321-4321-54321',
                             'productId' => '002',
-                            'token' => 'jlefkfgpdemkmlejognikjfo',
+                            'isVerified' => 1,
                             'currency' => 'USD',
                             'revenue' => 20.0,
                             'eventTimestamp' => time()

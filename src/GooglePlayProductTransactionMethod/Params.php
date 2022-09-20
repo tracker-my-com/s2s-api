@@ -45,4 +45,11 @@ final class Params extends BaseParams
      * @var float|null
      */
     public ?float $revenue = null;
+
+    /**
+     * Is payment verificated by user
+     *
+     * @var int|null
+     */
+    public ?int $isVerified = null;
 }
