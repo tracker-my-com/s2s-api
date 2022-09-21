@@ -53,6 +53,22 @@ class ParamsTest extends TestCase
     }
 
     /**
+     * @return void
+     */
+    public function testSetIntParam(): void
+    {
+        $params = new Params();
+        self::assertNull($params->isVerified);
+
+        $params->isVerified = 1;
+        self::assertEquals(1, $params->isVerified);
+
+        $this->expectException(\TypeError::class);
+        /** @noinspection PhpStrictTypeCheckingInspection */
+        $params->isVerified = True;
+    }
+
+    /**
      * @param string $paramName
      * @covers ::toArray
      * @return void

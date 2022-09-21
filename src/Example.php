@@ -367,7 +367,7 @@ class Example
         $params->eventTimestamp = time();
         $params->orderId = '321-4321-4321-54321';
         $params->productId = '002';
-        $params->token = 'jlefkfgpdemkmlejognikjfo';
+        $params->isVerified = 1;
         $params->currency = 'USD';
         $params->revenue = 20.0;
 
@@ -408,7 +408,7 @@ class Example
         $params->eventTimestamp = time();
         $params->orderId = '321-4321-4321-54321';
         $params->productId = '002';
-        $params->token = 'jlefkfgpdemkmlejognikjfo';
+        $params->isVerified = 1;
         $params->currency = 'USD';
         $params->revenue = 20.0;
 

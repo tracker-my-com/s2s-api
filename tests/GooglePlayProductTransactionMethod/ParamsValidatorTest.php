@@ -68,21 +68,6 @@ class ParamsValidatorTest extends TestCase
                 ]),
                 'error' => 'productId param is required',
             ],
-            'token not set' => [
-                'params' => $createParams([
-                    'orderId' => 'orderId',
-                    'productId' => 'productId'
-                ]),
-                'error' => 'token param is required',
-            ],
-            'token empty string' => [
-                'params' => $createParams([
-                    'orderId' => 'orderId',
-                    'productId' => 'productId',
-                    'token' => '',
-                ]),
-                'error' => 'token param is required',
-            ],
             'currency not set' => [
                 'params' => $createParams([
                     'orderId' => 'orderId',
@@ -166,6 +151,57 @@ class ParamsValidatorTest extends TestCase
                     'token' => 'token',
                     'currency' => 'RUB',
                     'revenue' => 10,
+                ]),
+                'error' => null,
+            ],
+            'token and isVerified not set' => [
+                'params' => $createParams([
+                    'orderId' => 'orderId',
+                    'productId' => 'productId',
+                    'currency' => 'RUB',
+                    'revenue' => 10.5,
+                ]),
+                'error' => 'One of the parameters must be passed: "token" or "isVerified"',
+            ],
+            'token and isVerified are set' => [
+                'params' => $createParams([
+                    'orderId' => 'orderId',
+                    'productId' => 'productId',
+                    'currency' => 'RUB',
+                    'revenue' => 10.5,
+                    'token' => 'token',
+                    'isVerified' => 1
+                ]),
+                'error' => 'Exactly one of the parameters must be passed: "token" or "isVerified"',
+            ],
+            'isVerified invalid value' => [
+                'params' => $createParams([
+                    'orderId' => 'orderId',
+                    'productId' => 'productId',
+                    'currency' => 'RUB',
+                    'revenue' => 10.5,
+                    'isVerified' => -1
+                ]),
+                'error' => 'isVerified must be 1',
+            ],
+            'isVerified is set' => [
+                'params' => $createParams([
+                    'orderId' => 'orderId',
+                    'productId' => 'productId',
+                    'currency' => 'RUB',
+                    'revenue' => 10.5,
+                    'isVerified' => 1
+                ]),
+                'error' => null,
+            ],
+            'isVerified is set 0 and token' => [
+                'params' => $createParams([
+                    'orderId' => 'orderId',
+                    'productId' => 'productId',
+                    'currency' => 'RUB',
+                    'revenue' => 10.5,
+                    'isVerified' => 0,
+                    'token' => 'token'
                 ]),
                 'error' => null,
             ],
