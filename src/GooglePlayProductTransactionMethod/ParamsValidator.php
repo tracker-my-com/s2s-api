@@ -45,15 +45,15 @@ final class ParamsValidator implements ValidatorInterface
             }
         }
 
-        if (!$this->params->token && !$this->params->isVerified) {
+        if (!$this->params->token && empty($this->params->isVerified)) {
             throw new InvalidArgumentException('One of the parameters must be passed: "token" or "isVerified"');
         }
 
-        if ($this->params->token && $this->params->isVerified) {
+        if ($this->params->token && !empty($this->params->isVerified)) {
             throw new InvalidArgumentException('Exactly one of the parameters must be passed: "token" or "isVerified"');
         }
 
-        if ($this->params->isVerified && $this->params->isVerified != 1) {
+        if (!empty($this->params->isVerified) && $this->params->isVerified !== 1) {
             throw new InvalidArgumentException('isVerified must be 1');
         }
 
