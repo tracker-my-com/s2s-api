@@ -194,6 +194,17 @@ class ParamsValidatorTest extends TestCase
                 ]),
                 'error' => null,
             ],
+            'isVerified is set 0 and token' => [
+                'params' => $createParams([
+                    'orderId' => 'orderId',
+                    'productId' => 'productId',
+                    'currency' => 'RUB',
+                    'revenue' => 10.5,
+                    'isVerified' => 0,
+                    'token' => 'token'
+                ]),
+                'error' => null,
+            ],
         ];
     }
 }
