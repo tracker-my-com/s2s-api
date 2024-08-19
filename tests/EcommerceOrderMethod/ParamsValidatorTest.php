@@ -24,7 +24,7 @@ final class ParamsValidatorTest extends TestCase
         $params = new Params();
         $params->orderId = '12345';
         $params->currencyCode = 'USD';
-        $params->actionTs = '1650000000';
+        $params->actionTs = '1577191920';
         $params->items = [self::createValidProductItem()];
 
         return $params;
@@ -37,8 +37,8 @@ final class ParamsValidatorTest extends TestCase
         $item->itemName = 'Product 1';
         $item->price = 100;
         $item->quantity = 1;
-        $item->discount = 0;
-        $item->tax = 20;
+        $item->discount = 10.5;
+        $item->tax = 20.5;
         $item->index = 0;
 
         return $item;

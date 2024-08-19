@@ -56,40 +56,4 @@ final class ParamsValidator implements ValidatorInterface
             $itemParamsValidator->validate();
         }
     }
-
-    private function validateProductItem($item): void
-    {
-        $requireParams = [
-            'item_id' => $item->itemId,
-            'item_name' => $item->itemName,
-            'price' => $item->price,
-            'quantity' => $item->quantity,
-        ];
-
-        foreach ($requireParams as $paramName => $paramValue) {
-            if ($paramValue === null || $paramValue === '') {
-                throw new InvalidArgumentException("$paramName param is required");
-            }
-        }
-
-        if ($item->price < 0 || $item->price > 10_000_000_000) {
-            throw new InvalidArgumentException("price must be between 0 and 10,000,000,000");
-        }
-
-        if ($item->discount < 0 || $item->discount > 10_000_000_000) {
-            throw new InvalidArgumentException("discount must be between 0 and 10,000,000,000");
-        }
-
-        if ($item->tax < 0 || $item->tax > 100) {
-            throw new InvalidArgumentException("tax must be between 0 and 100");
-        }
-
-        if ($item->index < 0) {
-            throw new InvalidArgumentException("index must be a non-negative integer");
-        }
-
-        if ($item->quantity < 1 || $item->quantity > 10_000_000_000) {
-            throw new InvalidArgumentException("quantity must be between 1 and 10,000,000,000");
-        }
-    }
 }

@@ -25,8 +25,8 @@ final class ProductItemParamsValidatorTest extends TestCase
         $params->itemName = 'Test Product';
         $params->price = 99.99;
         $params->quantity = 1;
-        $params->discount = 5.0;
-        $params->tax = 10.0;
+        $params->discount = 5.5;
+        $params->tax = 10.5;
         $params->index = 0;
 
         return $params;

@@ -30,7 +30,7 @@ final class ParamsTest extends TestCase
             ['status', 'completed'],
             ['currencyCode', 'USD'],
             ['actionId', 'action123'],
-            ['actionTs', '2024-08-16T12:34:56Z'],
+            ['actionTs', '1577191920'],
             ['coupon', 'DISCOUNT10'],
             ['items', [new ProductItemParams(), new ProductItemParams()]],
         ];
